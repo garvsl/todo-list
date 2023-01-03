@@ -1,14 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    
-</head>
-<body>
-    <script src="./main.js" defer></script>
-    <div class="hello">hi</div>
-</body>
-</html> 
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Todo-list</title>
+        <link rel="stylesheet" href="../src/styles.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Kodchasan:wght@200;400;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <script src="./main.js" defer></script>
+
+        <div id="content">
+            <header class="head">
+                <h1 class="title">Todo-list</h1>
+            </header>
+            <div class="panel">
+                <div class="tabs">
+                    <div class="tab">
+                        <svg
+                            style="width: 24px; height: 24px"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                fill="currentColor"
+                                d="M19,15H15A3,3 0 0,1 12,18A3,3 0 0,1 9,15H5V5H19M19,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z"
+                            />
+                        </svg>
+                        <h3>Inbox</h3>
+                    </div>
+                    <div class="tab">
+                        <svg
+                            style="width: 24px; height: 24px"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                fill="currentColor"
+                                d="M7,10H12V15H7M19,19H5V8H19M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z"
+                            />
+                        </svg>
+                        <h3>Today</h3>
+                    </div>
+                    <div class="tab">
+                        <svg
+                            style="width: 24px; height: 24px"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                fill="currentColor"
+                                d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"
+                            />
+                        </svg>
+                        <h3>Upcoming</h3>
+                    </div>
+                </div>
+                <div class="projects">
+                    <div class="project">
+                        <svg
+                            style="width: 24px; height: 24px"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                fill="currentColor"
+                                d="M4 4C2.89 4 2 4.89 2 6V18A2 2 0 0 0 4 20H20A2 2 0 0 0 22 18V8C22 6.89 21.1 6 20 6H12L10 4H4M4 8H20V18H4V8M12 9V11H15V9H12M16 9V11H19V9H16M12 12V14H15V12H12M16 12V14H19V12H16M12 15V17H15V15H12M16 15V17H19V15H16Z"
+                            />
+                        </svg>
+                        <h3>Projects:</h3>
+                    </div>
+                    <div class="project new">
+                        <h3>Create new project</h3>
+                        <svg
+                            style="width: 24px; height: 24px"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                fill="currentColor"
+                                d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+                            />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <h2 class="todo">Inbox</h2>
+                <div class="task">
+                    <input type="checkbox" name="" id="" />
+                    <textarea name="" id="" cols="30" rows="10"></textarea>
+                </div>
+                <div class="task newtask">
+                    <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                        <path
+                            fill="currentColor"
+                            d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+                        />
+                    </svg>
+                    <h3>Add new task</h3>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
