@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Kodchasan:wght@200;400;700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#content {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr 15fr;
+    grid-template-columns: 300px 1fr;
+}
+
+header {
+    background-color: rgb(196, 70, 70);
+    display: flex;
+    grid-column: 1/-1;
+    align-items: center;
+    justify-content: space-evenly;
+    user-select: none;
+    box-shadow: 0px 0px 5px black;
+}
+
+.title {
+    padding-left: 20px;
+    font-family: 'Kodchasan', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s ease-in-out;
+}
+
+.title:hover {
+    opacity: 0.5;
+}
+
+.bod {
+    background-color: rgb(255, 255, 255);
+}
+
+.mobile {
+    position: absolute;
+    left: 20px;
+    z-index: 105;
+    height: 40px;
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+    transition: 0.25s ease-in-out;
+    cursor: pointer;
+}
+
+.piece:nth-child(1) {
+    width: 40px;
+    height: 5px;
+    border-radius: 25px;
+    transition: 0.3s ease-in-out;
+    background-color: white;
+}
+
+.piece:nth-child(2) {
+    width: 40px;
+    height: 5px;
+    border-radius: 25px;
+    transition: 0.3s ease-in-out;
+    background-color: white;
+}
+
+.piece:nth-child(3) {
+    width: 40px;
+    height: 5px;
+    border-radius: 25px;
+    transition: 0.3s ease-in-out;
+    background-color: white;
+}
+
+.mobile:hover {
+    opacity: 0.5;
+}
+
+.panel {
+    background-color: rgba(188, 188, 188, 0.123);
+    /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.139); */
+    position: relative;
+
+    font-family: 'Kodchasan', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding-top: 50px;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: column;
+}
+
+.tab {
+    display: flex;
+    padding-left: 25px;
+    gap: 5px;
+    letter-spacing: 1px;
+    align-items: center;
+    transition: 0.35s ease-in-out;
+    user-select: none;
+    height: 50px;
+    cursor: pointer;
+}
+
+.tab:hover,
+.new:hover,
+.newtask:hover {
+    color: white;
+    background-color: rgb(196, 70, 70);
+}
+
+.new:hover svg {
+    color: rgb(126, 189, 126);
+}
+
+.project {
+    display: flex;
+    padding-left: 25px;
+    gap: 5px;
+    letter-spacing: 1px;
+    align-items: center;
+    transition: 0.35s ease-in-out;
+    user-select: none;
+    height: 50px;
+}
+
+.projectheld {
+    display: flex;
+    align-items: center;
+    transition: 0.35s ease-in-out;
+}
+
+.new {
+    cursor: pointer;
+}
+
+.new svg {
+    transition: 0.35s ease-in-out;
+}
+
+.main {
+    padding-left: calc(100% / 25);
+}
+
+.todo {
+    font-family: 'Kodchasan', sans-serif;
+    font-weight: 700;
+    transition: 0.25s ease-in-out;
+    user-select: none;
+    padding-bottom: 35px;
+}
+
+input[type='checkbox']:checked {
+    background-color: rgb(88, 243, 88);
+    border-color: rgb(88, 243, 88);
+}
+
+input[type='checkbox']::before {
+    opacity: 0;
+    position: absolute;
+    border-radius: 25px;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: greenyellow;
+}
+
+input[type='checkbox'] {
+    position: relative;
+    appearance: none;
+    border: 1px solid black;
+    width: 20px;
+    height: 20px;
+    border-radius: 25px;
+    transition: 0.35s ease-in-out;
+}
+
+input[type='checkbox']:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.task {
+    font-family: 'Kodchasan', sans-serif;
+    font-weight: 200;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: 0.35s ease-in-out;
+    border-bottom: 1px solid grey;
+
+    padding: 5px;
+    width: 80%;
+}
+
+textarea {
+    font-family: 'Kodchasan', sans-serif;
+    appearance: none;
+    outline: none;
+    border: none;
+    resize: none;
+    height: 1rem;
+    width: 80%;
+}
+
+.newtask {
+    user-select: none;
+    cursor: pointer;
+}
