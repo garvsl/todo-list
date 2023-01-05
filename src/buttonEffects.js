@@ -1,0 +1,207 @@
+import { isPast, parseISO, isToday } from 'date-fns'
+import { createTodo } from './createTodo'
+
+const projectArray = []
+const indexList = []
+const todayList = []
+const upcomingList = []
+
+export default function buttonEffect() {
+    const content = document.getElementById('content')
+    const projectNew = document.querySelector('.new')
+    const projects = document.querySelector('.projects')
+    const main = document.querySelector('.main')
+    const taskNew = document.querySelector('.newer')
+
+    projectNew.addEventListener('click', () => {
+        projectNew.style.display = 'none'
+
+        const yesno = document.createElement('div')
+        yesno.classList.add('yesno')
+        projects.appendChild(yesno)
+
+        const textbox = document.createElement('input')
+        textbox.type = 'text'
+        textbox.required = true
+        yesno.appendChild(textbox)
+
+        const ansCover = document.createElement('div')
+        ansCover.classList.add('anscover')
+        yesno.appendChild(ansCover)
+
+        const yes = document.createElement('button')
+        yes.classList.add('yes')
+        yes.type = 'submit'
+        yes.innerHTML =
+            '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /> </svg>'
+        ansCover.appendChild(yes)
+
+        const no = document.createElement('button')
+        no.type = 'reset'
+        no.innerHTML =
+            '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+        no.classList.add('no')
+        ansCover.appendChild(no)
+
+        textbox.style.opacity = '1'
+        yes.style.opacity = '1'
+        no.style.opacity = '1'
+
+        yes.addEventListener('click', () => {
+            if (textbox.value) {
+                yesno.remove()
+                const project = createProject(textbox.value)
+                projectArray.push(project)
+                // console.log(projectArray)
+
+                const projectNewer = document.createElement('div')
+                projectNewer.classList.add('project')
+                projectNewer.classList.add('new')
+                projects.appendChild(projectNewer)
+
+                const projectNewTag = document.createElement('h3')
+                projectNewTag.textContent = `${textbox.value}`
+                projectNewer.appendChild(projectNewTag)
+
+                projectNew.style.display = 'flex'
+
+                projects.appendChild(projectNew)
+
+                const noper = document.createElement('button')
+                noper.classList.add('noper')
+                noper.type = 'reset'
+                noper.innerHTML =
+                    '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                projectNewer.appendChild(noper)
+
+                noper.addEventListener('click', () => {
+                    projectNewer.remove()
+                })
+
+                projectNewer.addEventListener('click', () => {
+                    projectNewer.style.backgroundColor = 'rgb(196, 70, 70)'
+                })
+            }
+        })
+        no.addEventListener('click', () => {
+            yesno.style.opacity = '0'
+            yesno.remove()
+            projectNew.style.display = 'flex'
+            setTimeout(() => {
+                projectNew.style.opacity = '1'
+            }, 250)
+        })
+    })
+
+    taskNew.addEventListener('click', () => {
+        const formed = document.createElement('div')
+        formed.classList.add('formed')
+        document.body.appendChild(formed)
+        content.style.pointerEvents = 'none'
+        content.style.filter = 'blur(5px)'
+        const clickexit = document.createElement('button')
+        clickexit.type = 'reset'
+        clickexit.classList.add('clickexit')
+        clickexit.innerHTML =
+            '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+        formed.appendChild(clickexit)
+
+        const taskcontainer = document.createElement('div')
+        taskcontainer.classList.add('container')
+        formed.appendChild(taskcontainer)
+
+        const tasklabel = document.createElement('label')
+        tasklabel.textContent = 'Task'
+        taskcontainer.appendChild(tasklabel)
+
+        const taskname = document.createElement('input')
+        taskcontainer.appendChild(taskname)
+        taskname.required = 'true'
+
+        const datecontainer = document.createElement('div')
+        datecontainer.classList.add('container')
+        formed.appendChild(datecontainer)
+
+        const datelabel = document.createElement('label')
+        datelabel.textContent = 'Deadline'
+        datecontainer.appendChild(datelabel)
+
+        const dateitself = document.createElement('input')
+        dateitself.type = 'date'
+        datecontainer.appendChild(dateitself)
+        dateitself.required = 'true'
+
+        const buttoncreate = document.createElement('button')
+        buttoncreate.classList.add('buttoncreate')
+        buttoncreate.textContent = 'Create'
+        formed.appendChild(buttoncreate)
+
+        clickexit.addEventListener('click', () => {
+            formed.remove()
+            content.style.pointerEvents = 'all'
+            content.style.filter = 'none'
+        })
+
+        buttoncreate.addEventListener('click', () => {
+            if (taskname.value && dateitself.value) {
+                const createdTodo = createTodo(taskname.value, dateitself.value)
+                // console.log(createdTodo)
+
+                const task = document.createElement('div')
+                task.classList.add('task')
+                main.appendChild(task)
+                const checkbox = document.createElement('input')
+                checkbox.type = 'checkbox'
+                task.appendChild(checkbox)
+                const textarea = document.createElement('h3')
+                textarea.textContent = `${createdTodo.title}`
+                task.appendChild(textarea)
+                const dueofDate = document.createElement('h3')
+                dueofDate.textContent = `${createdTodo.actualDate}`
+                dueofDate.classList.add('dueofdate')
+                task.appendChild(dueofDate)
+                const no = document.createElement('button')
+                no.classList.add('nope')
+                no.type = 'reset'
+                no.innerHTML =
+                    '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                task.appendChild(no)
+                no.addEventListener('click', () => {
+                    task.remove()
+                })
+                const parsedIso = parseISO(dateitself.value)
+                if (isToday(parsedIso)) {
+                    dueofDate.style.color = 'green'
+                    indexList.push(createdTodo)
+                    todayList.push(createdTodo)
+                } else if (isPast(parsedIso)) {
+                    dueofDate.style.color = 'red'
+                    indexList.push(createdTodo)
+                } else if (!isPast(parsedIso)) {
+                    dueofDate.style.color = 'blue'
+                    upcomingList.push(createdTodo)
+                }
+                main.appendChild(taskNew)
+
+                formed.remove()
+                content.style.pointerEvents = 'all'
+                content.style.filter = 'none'
+            }
+        })
+    })
+
+    // taskNew.addEventListener('mouseover', () => {
+
+    // })
+
+    // taskNew.addEventListener('mouseout', () => {
+    //     no.remove()
+    // })
+}
+
+// so when u switch a project, have it run the responding function, inside said function will be the todos that need to be done.
+// you can use the name of the thing as a holder but idk dont be too reliant on the dom
+
+// its literally the same thing as library...you just wanted to be differnt and used the text area which basically makes it impossible
+
+// add event listener to checkbox

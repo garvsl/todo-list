@@ -1,4 +1,6 @@
 export default function mobileBut() {
+    const main = document.querySelector('.main')
+
     const header = document.querySelector('.head')
 
     const mobile = document.createElement('div')
@@ -17,6 +19,16 @@ export default function mobileBut() {
     pieceThree.classList.add('piece')
     mobile.appendChild(pieceThree)
 
+    const panel = document.querySelector('.panel')
+
+    pieceOne.style.transformOrigin = 'center'
+    pieceTwo.style.transformOrigin = 'center'
+    pieceOne.style.transform = 'rotate(-45deg)'
+    pieceTwo.style.transform = 'rotate(45deg)'
+    pieceTwo.style.marginTop = '-10px'
+    pieceThree.style.opacity = '0'
+    mobile.style.paddingTop = '10px'
+
     function mobileEvent() {
         // const smallMenu = document.createElement('div')
         // smallMenu.classList.add('smallMenu')
@@ -27,12 +39,14 @@ export default function mobileBut() {
         // animate it coming down
 
         // smallMenu.style.top = '70px'
-        pieceOne.style.transformOrigin = 'center'
-        pieceTwo.style.transformOrigin = 'center'
-        pieceOne.style.transform = 'rotate(-45deg)'
-        pieceTwo.style.transform = 'rotate(45deg)'
-        pieceTwo.style.marginTop = '-10px'
-        pieceThree.style.opacity = '0'
+        pieceOne.style.transform = 'rotate(0deg)'
+        pieceTwo.style.transform = 'rotate(-0deg)'
+        pieceTwo.style.marginTop = '0'
+        pieceThree.style.opacity = '1'
+        mobile.style.paddingTop = '0px'
+
+        panel.style.left = '-300px'
+        main.style.left = '-300px'
 
         // smallMenu.appendChild(links)
         // links.style.display = 'flex'
@@ -48,11 +62,16 @@ export default function mobileBut() {
     function mobileRemove() {
         // const smallMenu = document.querySelector('.smallMenu')
 
-        pieceOne.style.transform = 'rotate(0deg)'
-        pieceTwo.style.transform = 'rotate(-0deg)'
-        pieceTwo.style.marginTop = '0'
-        pieceThree.style.opacity = '1'
+        pieceOne.style.transformOrigin = 'center'
+        pieceTwo.style.transformOrigin = 'center'
+        pieceOne.style.transform = 'rotate(-45deg)'
+        pieceTwo.style.transform = 'rotate(45deg)'
+        pieceTwo.style.marginTop = '-10px'
+        pieceThree.style.opacity = '0'
+        mobile.style.paddingTop = '10px'
 
+        panel.style.left = '0px'
+        main.style.left = '0px'
         // smallMenu.style.top = '0'
 
         mobile.removeEventListener('click', mobileRemove)

@@ -24,6 +24,7 @@ header {
 
 .title {
     padding-left: 20px;
+    color: white;
     font-family: 'Kodchasan', sans-serif;
     font-weight: 700;
     cursor: pointer;
@@ -39,11 +40,12 @@ header {
 }
 
 .mobile {
+    padding: 0;
     position: absolute;
     left: 20px;
     z-index: 105;
     height: 40px;
-    width: 50px;
+    width: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -83,9 +85,10 @@ header {
 
 .panel {
     background-color: rgba(188, 188, 188, 0.123);
-    /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.139); */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.139);
     position: relative;
-
+    transition: 1s ease-in-out;
+    left: 0;
     font-family: 'Kodchasan', sans-serif;
     display: flex;
     flex-direction: column;
@@ -98,7 +101,9 @@ header {
     flex-direction: column;
 }
 
-.tab {
+.tabOne,
+.tabTwo,
+.tabThree {
     display: flex;
     padding-left: 25px;
     gap: 5px;
@@ -108,17 +113,127 @@ header {
     user-select: none;
     height: 50px;
     cursor: pointer;
+    background-color: white;
+}
+
+.tabOne {
+    background-color: rgb(196, 70, 70);
+    color: white;
+}
+
+.tab svg {
+    margin-top: 3px;
+}
+
+.project svg {
+    margin-top: 2px;
 }
 
 .tab:hover,
 .new:hover,
 .newtask:hover {
-    color: white;
-    background-color: rgb(196, 70, 70);
+    opacity: 0.4;
 }
 
-.new:hover svg {
-    color: rgb(126, 189, 126);
+.nope {
+    /* margin-left: auto; */
+    border: none;
+    background-color: white;
+    opacity: 1;
+    outline: none;
+    transition: 0.35s ease-in-out;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.noper {
+    margin-left: auto;
+    border: none;
+    background-color: transparent;
+    opacity: 1;
+    outline: none;
+    transition: 0.35s ease-in-out;
+    cursor: pointer;
+    padding-right: 30px;
+}
+
+.new:hover {
+    color: black;
+}
+
+.clickexit {
+    border: none;
+    background-color: white;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 10px;
+    transition: 0.35s ease-in-out;
+}
+.nope:hover svg,
+.clickexit:hover {
+    color: red;
+}
+
+.noper:hover {
+    color: red;
+    opacity: 1;
+}
+
+.task h3 {
+    user-select: none;
+}
+.dueofdate {
+    margin-left: auto;
+}
+
+.formed {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.201);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 25px;
+    height: 200px;
+    display: flex;
+    padding: 25px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 350px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-family: 'Kodchasan', sans-serif;
+    padding-bottom: 5px;
+}
+
+.buttoncreate {
+    font-family: 'Kodchasan', sans-serif;
+    background-color: rgb(196, 70, 70);
+    border-radius: 25px;
+    border: none;
+    user-select: none;
+    cursor: pointer;
+    padding: 10px;
+    transition: 0.35s ease-in-out;
+}
+
+.buttoncreate:hover {
+    opacity: 0.5;
+}
+
+input {
+    border-radius: 25px;
+    border: 1px solid black;
+    padding-left: 10px;
+    width: 300px;
 }
 
 .project {
@@ -139,6 +254,7 @@ header {
 }
 
 .new {
+    padding-left: 80px;
     cursor: pointer;
 }
 
@@ -148,6 +264,9 @@ header {
 
 .main {
     padding-left: calc(100% / 25);
+    transition: 1s ease-in-out;
+    position: relative;
+    left: 0;
 }
 
 .todo {
@@ -159,7 +278,7 @@ header {
 }
 
 input[type='checkbox']:checked {
-    background-color: rgb(88, 243, 88);
+    background-color: rgba(88, 243, 88, 0.389);
     border-color: rgb(88, 243, 88);
 }
 
@@ -170,6 +289,7 @@ input[type='checkbox']::before {
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
+    margin-top: 10px;
     content: '';
     width: 10px;
     height: 10px;
@@ -177,6 +297,7 @@ input[type='checkbox']::before {
 }
 
 input[type='checkbox'] {
+    margin-top: 10px;
     position: relative;
     appearance: none;
     border: 1px solid black;
@@ -197,9 +318,9 @@ input[type='checkbox']:hover {
     display: flex;
     align-items: center;
     gap: 15px;
+
     transition: 0.35s ease-in-out;
     border-bottom: 1px solid grey;
-
     padding: 5px;
     width: 80%;
 }
@@ -210,11 +331,67 @@ textarea {
     outline: none;
     border: none;
     resize: none;
-    height: 1rem;
+    height: 1.25rem;
     width: 80%;
 }
 
 .newtask {
     user-select: none;
     cursor: pointer;
+}
+
+.yesno {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 1;
+    transition: 0.35s ease-in-out;
+}
+
+.yes {
+    transition: 0.35s ease-in-out;
+    opacity: 0;
+    background-color: rgb(112, 198, 112);
+    border-radius: 50%;
+    padding: 5px;
+    border: none;
+}
+
+.no {
+    transition: 0.35s ease-in-out;
+    opacity: 0;
+    background-color: rgb(198, 122, 112);
+    border-radius: 50%;
+    padding: 5px;
+    border: none;
+}
+input[type='text'] {
+    padding-left: 10px;
+    transition: 0.35s ease-in-out;
+    opacity: 0;
+    border-radius: 15px;
+    margin-left: 80px;
+    height: 25px;
+    width: 150px;
+    border: 1px solid black;
+}
+
+.anscover {
+    margin-left: 80px;
+    width: 150px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.yes:hover,
+.no:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.newer {
+    user-select: none;
 }
