@@ -101,10 +101,19 @@ export default function buttonEffect() {
                 projectNewer.addEventListener('click', () => {
                     const title = document.querySelector('.todo')
                     const tabs = document.querySelectorAll('.tab')
+                    const news = document.querySelectorAll('.new')
+                    const tasks = document.querySelectorAll('.tasks')
                     title.textContent = `${textbox.value}`
                     tabs.forEach((element) => {
                         element.style.color = 'black'
                         element.style.backgroundColor = 'transparent'
+                    })
+                    news.forEach((element) => {
+                        element.style.color = 'black'
+                        element.style.backgroundColor = 'transparent'
+                    })
+                    tasks.forEach((element) => {
+                        element.remove()
                     })
                     projectNewer.style.backgroundColor = 'rgb(196, 70, 70)'
                     projectNewer.style.color = 'white'
@@ -112,6 +121,7 @@ export default function buttonEffect() {
                     project.todo.forEach((element) => {
                         const task = document.createElement('div')
                         task.classList.add('task')
+                        task.classList.add('tasks')
                         main.appendChild(task)
                         const checkbox = document.createElement('input')
                         checkbox.type = 'checkbox'
@@ -144,7 +154,118 @@ export default function buttonEffect() {
                         //     dueofDate.style.color = 'blue'
                         //     upcomingList.push(element)
                         // }
+
                         main.appendChild(taskNew)
+                    })
+
+                    taskNew.addEventListener('click', () => {
+                        const formed = document.createElement('div')
+                        console.log('hellooo')
+                        formed.classList.add('formed')
+                        document.body.appendChild(formed)
+                        content.style.pointerEvents = 'none'
+                        content.style.filter = 'blur(5px)'
+                        const clickexit = document.createElement('button')
+                        clickexit.type = 'reset'
+                        clickexit.classList.add('clickexit')
+                        clickexit.innerHTML =
+                            '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                        formed.appendChild(clickexit)
+
+                        const taskcontainer = document.createElement('div')
+                        taskcontainer.classList.add('container')
+                        formed.appendChild(taskcontainer)
+
+                        const tasklabel = document.createElement('label')
+                        tasklabel.textContent = 'Task'
+                        taskcontainer.appendChild(tasklabel)
+
+                        const taskname = document.createElement('input')
+                        taskcontainer.appendChild(taskname)
+                        taskname.required = 'true'
+
+                        const datecontainer = document.createElement('div')
+                        datecontainer.classList.add('container')
+                        formed.appendChild(datecontainer)
+
+                        const datelabel = document.createElement('label')
+                        datelabel.textContent = 'Deadline'
+                        datecontainer.appendChild(datelabel)
+
+                        const dateitself = document.createElement('input')
+                        dateitself.type = 'date'
+                        datecontainer.appendChild(dateitself)
+                        dateitself.required = 'true'
+
+                        const buttoncreate = document.createElement('button')
+                        buttoncreate.classList.add('buttoncreate')
+                        buttoncreate.textContent = 'Create'
+                        formed.appendChild(buttoncreate)
+
+                        clickexit.addEventListener('click', () => {
+                            formed.remove()
+                            content.style.pointerEvents = 'all'
+                            content.style.filter = 'none'
+                        })
+
+                        function butcreate() {
+                            if (taskname.value && dateitself.value) {
+                                const createdTodo = createTodo(
+                                    taskname.value,
+                                    dateitself.value
+                                )
+                                // console.log(createdTodo)
+
+                                const task = document.createElement('div')
+                                task.classList.add('task')
+                                task.classList.add('tasks')
+                                main.appendChild(task)
+                                const checkbox = document.createElement('input')
+                                checkbox.type = 'checkbox'
+                                task.appendChild(checkbox)
+                                const textarea = document.createElement('h3')
+                                textarea.textContent = `${createdTodo.title}`
+                                task.appendChild(textarea)
+                                const dueofDate = document.createElement('h3')
+                                dueofDate.textContent = `${createdTodo.actualDate}`
+                                dueofDate.classList.add('dueofdate')
+                                task.appendChild(dueofDate)
+                                const no = document.createElement('button')
+                                no.classList.add('nope')
+                                no.type = 'reset'
+                                no.innerHTML =
+                                    '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                                task.appendChild(no)
+                                no.addEventListener('click', () => {
+                                    task.remove()
+                                })
+                                const parsedIso = parseISO(dateitself.value)
+                                if (isToday(parsedIso)) {
+                                    dueofDate.style.color = 'green'
+                                    indexList.push(createdTodo)
+                                    todayList.push(createdTodo)
+                                } else if (isPast(parsedIso)) {
+                                    dueofDate.style.color = 'red'
+                                    indexList.push(createdTodo)
+                                } else if (!isPast(parsedIso)) {
+                                    dueofDate.style.color = 'blue'
+                                    upcomingList.push(createdTodo)
+                                }
+
+                                main.appendChild(taskNew)
+
+                                formed.remove()
+                                content.style.pointerEvents = 'all'
+                                content.style.filter = 'none'
+
+                                project.todo.push(createdTodo)
+                                console.log(project)
+                            } else {
+                                alert('Incomplete')
+                            }
+                        }
+
+                        buttoncreate.addEventListener('click', butcreate)
                     })
 
                     // const buttoncreate = document.querySelector('.buttoncreate')
@@ -163,106 +284,6 @@ export default function buttonEffect() {
     })
 
     // make this into new js
-    taskNew.addEventListener('click', () => {
-        const formed = document.createElement('div')
-        formed.classList.add('formed')
-        document.body.appendChild(formed)
-        content.style.pointerEvents = 'none'
-        content.style.filter = 'blur(5px)'
-        const clickexit = document.createElement('button')
-        clickexit.type = 'reset'
-        clickexit.classList.add('clickexit')
-        clickexit.innerHTML =
-            '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
-        formed.appendChild(clickexit)
-
-        const taskcontainer = document.createElement('div')
-        taskcontainer.classList.add('container')
-        formed.appendChild(taskcontainer)
-
-        const tasklabel = document.createElement('label')
-        tasklabel.textContent = 'Task'
-        taskcontainer.appendChild(tasklabel)
-
-        const taskname = document.createElement('input')
-        taskcontainer.appendChild(taskname)
-        taskname.required = 'true'
-
-        const datecontainer = document.createElement('div')
-        datecontainer.classList.add('container')
-        formed.appendChild(datecontainer)
-
-        const datelabel = document.createElement('label')
-        datelabel.textContent = 'Deadline'
-        datecontainer.appendChild(datelabel)
-
-        const dateitself = document.createElement('input')
-        dateitself.type = 'date'
-        datecontainer.appendChild(dateitself)
-        dateitself.required = 'true'
-
-        const buttoncreate = document.createElement('button')
-        buttoncreate.classList.add('buttoncreate')
-        buttoncreate.textContent = 'Create'
-        formed.appendChild(buttoncreate)
-
-        clickexit.addEventListener('click', () => {
-            formed.remove()
-            content.style.pointerEvents = 'all'
-            content.style.filter = 'none'
-        })
-
-        function butcreate() {
-            if (taskname.value && dateitself.value) {
-                const createdTodo = createTodo(taskname.value, dateitself.value)
-                // console.log(createdTodo)
-
-                const task = document.createElement('div')
-                task.classList.add('task')
-                main.appendChild(task)
-                const checkbox = document.createElement('input')
-                checkbox.type = 'checkbox'
-                task.appendChild(checkbox)
-                const textarea = document.createElement('h3')
-                textarea.textContent = `${createdTodo.title}`
-                task.appendChild(textarea)
-                const dueofDate = document.createElement('h3')
-                dueofDate.textContent = `${createdTodo.actualDate}`
-                dueofDate.classList.add('dueofdate')
-                task.appendChild(dueofDate)
-                const no = document.createElement('button')
-                no.classList.add('nope')
-                no.type = 'reset'
-                no.innerHTML =
-                    '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
-                task.appendChild(no)
-                no.addEventListener('click', () => {
-                    task.remove()
-                })
-                const parsedIso = parseISO(dateitself.value)
-                if (isToday(parsedIso)) {
-                    dueofDate.style.color = 'green'
-                    indexList.push(createdTodo)
-                    todayList.push(createdTodo)
-                } else if (isPast(parsedIso)) {
-                    dueofDate.style.color = 'red'
-                    indexList.push(createdTodo)
-                } else if (!isPast(parsedIso)) {
-                    dueofDate.style.color = 'blue'
-                    upcomingList.push(createdTodo)
-                }
-                main.appendChild(taskNew)
-
-                formed.remove()
-                content.style.pointerEvents = 'all'
-                content.style.filter = 'none'
-            } else {
-                alert('Incomplete')
-            }
-        }
-
-        buttoncreate.addEventListener('click', butcreate)
-    })
 
     // taskNew.addEventListener('mouseover', () => {
 

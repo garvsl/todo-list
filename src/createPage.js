@@ -111,6 +111,7 @@ export default function index() {
 
     const task = document.createElement('div')
     task.classList.add('task')
+    task.classList.add('tasks')
     main.appendChild(task)
 
     const checkbox = document.createElement('input')
