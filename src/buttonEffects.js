@@ -1,10 +1,25 @@
 import { isPast, parseISO, isToday } from 'date-fns'
-import { createTodo } from './createTodo'
+import createProject, { createTodo, todoStatus } from './createTodo'
 
 const projectArray = []
 const indexList = []
 const todayList = []
 const upcomingList = []
+
+indexList.forEach((element) => {
+    // so make a list for each project/tab and whcihever list it is in the new task will be appened to that, the only thing this doesnt apply
+    // to is the inbox/today/upcoming those are automatic due to the date, so basically only the projects
+    //
+    // yes that sounds good, but how will that be done? for the library there was a library list named globally at the beginning, but for this you
+    // basically need a different list for each project/inbox
+    // these lists can be created when the projects are made, but how would you access them afterwards?
+    //
+    // when u create the project it will make a createproject with its name and it has a list, for each element in the list it will create a task
+    // when u click the add new under the project it pushes it to the list
+    //
+    // ok so for each element in the list it will create it, but how can i incoporate the add new task to push it to the list.
+    // it already has the add new task
+})
 
 export default function buttonEffect() {
     const content = document.getElementById('content')
@@ -21,6 +36,7 @@ export default function buttonEffect() {
         projects.appendChild(yesno)
 
         const textbox = document.createElement('input')
+        textbox.maxLength = 12
         textbox.type = 'text'
         textbox.required = true
         yesno.appendChild(textbox)
@@ -51,7 +67,9 @@ export default function buttonEffect() {
             if (textbox.value) {
                 yesno.remove()
                 const project = createProject(textbox.value)
-                projectArray.push(project)
+
+                console.log(project)
+                // projectArray.push(project)
                 // console.log(projectArray)
 
                 const projectNewer = document.createElement('div')
@@ -76,10 +94,61 @@ export default function buttonEffect() {
 
                 noper.addEventListener('click', () => {
                     projectNewer.remove()
+                    const title = document.querySelector('.todo')
+                    title.textContent = 'Inbox'
                 })
 
                 projectNewer.addEventListener('click', () => {
+                    const title = document.querySelector('.todo')
+                    const tabs = document.querySelectorAll('.tab')
+                    title.textContent = `${textbox.value}`
+                    tabs.forEach((element) => {
+                        element.style.color = 'black'
+                        element.style.backgroundColor = 'transparent'
+                    })
                     projectNewer.style.backgroundColor = 'rgb(196, 70, 70)'
+                    projectNewer.style.color = 'white'
+
+                    project.todo.forEach((element) => {
+                        const task = document.createElement('div')
+                        task.classList.add('task')
+                        main.appendChild(task)
+                        const checkbox = document.createElement('input')
+                        checkbox.type = 'checkbox'
+                        task.appendChild(checkbox)
+                        const textarea = document.createElement('h3')
+                        textarea.textContent = `${element.title}`
+                        task.appendChild(textarea)
+                        const dueofDate = document.createElement('h3')
+                        dueofDate.textContent = `${element.actualDate}`
+                        dueofDate.classList.add('dueofdate')
+                        task.appendChild(dueofDate)
+                        const no = document.createElement('button')
+                        no.classList.add('nope')
+                        no.type = 'reset'
+                        no.innerHTML =
+                            '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                        task.appendChild(no)
+                        no.addEventListener('click', () => {
+                            task.remove()
+                        })
+                        // const parsedIso = parseISO(dateitself.value)
+                        // if (isToday(parsedIso)) {
+                        //     dueofDate.style.color = 'green'
+                        //     indexList.push(element)
+                        //     todayList.push(element)
+                        // } else if (isPast(parsedIso)) {
+                        //     dueofDate.style.color = 'red'
+                        //     indexList.push(element)
+                        // } else if (!isPast(parsedIso)) {
+                        //     dueofDate.style.color = 'blue'
+                        //     upcomingList.push(element)
+                        // }
+                        main.appendChild(taskNew)
+                    })
+
+                    // const buttoncreate = document.querySelector('.buttoncreate')
+                    // buttoncreate.addEventListener('click', () => {})
                 })
             }
         })
@@ -93,6 +162,7 @@ export default function buttonEffect() {
         })
     })
 
+    // make this into new js
     taskNew.addEventListener('click', () => {
         const formed = document.createElement('div')
         formed.classList.add('formed')
@@ -142,7 +212,7 @@ export default function buttonEffect() {
             content.style.filter = 'none'
         })
 
-        buttoncreate.addEventListener('click', () => {
+        function butcreate() {
             if (taskname.value && dateitself.value) {
                 const createdTodo = createTodo(taskname.value, dateitself.value)
                 // console.log(createdTodo)
@@ -186,8 +256,12 @@ export default function buttonEffect() {
                 formed.remove()
                 content.style.pointerEvents = 'all'
                 content.style.filter = 'none'
+            } else {
+                alert('Incomplete')
             }
-        })
+        }
+
+        buttoncreate.addEventListener('click', butcreate)
     })
 
     // taskNew.addEventListener('mouseover', () => {

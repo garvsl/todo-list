@@ -367,18 +367,18 @@ textarea {
     border: none;
 }
 input[type='text'] {
-    padding-left: 10px;
+    /* padding-left: 10px; */
     transition: 0.35s ease-in-out;
     opacity: 0;
     border-radius: 15px;
-    margin-left: 80px;
+    margin-left: 50px;
     height: 25px;
-    width: 150px;
+    width: 190px;
     border: 1px solid black;
 }
 
 .anscover {
-    margin-left: 80px;
+    margin-left: 50px;
     width: 150px;
     display: flex;
     justify-content: space-evenly;

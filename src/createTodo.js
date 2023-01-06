@@ -1,9 +1,9 @@
 import { compareAsc, format, min } from 'date-fns'
 
-export default function createProject(name, todo) {
+export default function createProject(title) {
     return {
-        name,
-        todo,
+        title,
+        todo: [],
     }
 }
 
@@ -27,7 +27,7 @@ export function todoStatus(todo) {
 }
 
 const gym = createTodo('clean the toilet', '2023-11-13')
-const normal = createProject('Default', gym)
+const normal = createProject(gym).todo
 
 console.log(normal)
-console.log(todoStatus(normal))
+// console.log(todoStatus(normal))

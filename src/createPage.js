@@ -156,24 +156,45 @@ export default function index() {
     })
 
     tabOne.addEventListener('click', () => {
+        const allProjects = document.querySelectorAll('.project')
+        allProjects.forEach((element) => {
+            element.style.color = 'black'
+            element.style.backgroundColor = 'transparent'
+        })
         todoTitle.textContent = 'Inbox'
         tabOne.style.backgroundColor = 'rgb(196, 70, 70)'
-        tabOne.style.color = 'black'
+        tabOne.style.color = 'white'
+        tabTwo.style.color = 'black'
+        tabThree.style.color = 'black'
         tabTwo.style.backgroundColor = 'transparent'
         tabThree.style.backgroundColor = 'transparent'
     })
 
     tabTwo.addEventListener('click', () => {
+        const allProjects = document.querySelectorAll('.project')
+        allProjects.forEach((element) => {
+            element.style.color = 'black'
+            element.style.backgroundColor = 'transparent'
+        })
         todoTitle.textContent = 'Today'
         tabTwo.style.backgroundColor = 'rgb(196, 70, 70)'
+        tabTwo.style.color = 'white'
+        tabThree.style.color = 'black'
         tabOne.style.color = 'black'
         tabOne.style.backgroundColor = 'transparent'
         tabThree.style.backgroundColor = 'transparent'
     })
 
     tabThree.addEventListener('click', () => {
+        const allProjects = document.querySelectorAll('.project')
+        allProjects.forEach((element) => {
+            element.style.color = 'black'
+            element.style.backgroundColor = 'transparent'
+        })
         todoTitle.textContent = 'Upcoming'
         tabThree.style.backgroundColor = 'rgb(196, 70, 70)'
+        tabThree.style.color = 'white'
+        tabTwo.style.color = 'black'
         tabOne.style.color = 'black'
         tabTwo.style.backgroundColor = 'transparent'
         tabOne.style.backgroundColor = 'transparent'
