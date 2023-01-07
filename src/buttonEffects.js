@@ -1,25 +1,25 @@
 import { isPast, parseISO, isToday } from 'date-fns'
 import createProject, { createTodo, todoStatus } from './createTodo'
 
-const projectArray = []
-const indexList = []
-const todayList = []
-const upcomingList = []
+export const indexList = []
+export const todayList = []
+export const upcomingList = []
+let num = 0
 
-indexList.forEach((element) => {
-    // so make a list for each project/tab and whcihever list it is in the new task will be appened to that, the only thing this doesnt apply
-    // to is the inbox/today/upcoming those are automatic due to the date, so basically only the projects
-    //
-    // yes that sounds good, but how will that be done? for the library there was a library list named globally at the beginning, but for this you
-    // basically need a different list for each project/inbox
-    // these lists can be created when the projects are made, but how would you access them afterwards?
-    //
-    // when u create the project it will make a createproject with its name and it has a list, for each element in the list it will create a task
-    // when u click the add new under the project it pushes it to the list
-    //
-    // ok so for each element in the list it will create it, but how can i incoporate the add new task to push it to the list.
-    // it already has the add new task
-})
+// so make a list for each project/tab and whcihever list it is in the new task will be appened to that, the only thing this doesnt apply
+// to is the inbox/today/upcoming those are automatic due to the date, so basically only the projects
+//
+// yes that sounds good, but how will that be done? for the library there was a library list named globally at the beginning, but for this you
+// basically need a different list for each project/inbox
+// these lists can be created when the projects are made, but how would you access them afterwards?
+//
+// when u create the project it will make a createproject with its name and it has a list, for each element in the list it will create a task
+// when u click the add new under the project it pushes it to the list
+//
+// ok so for each element in the list it will create it, but how can i incoporate the add new task to push it to the list.
+// it already has the add new task
+
+// still have to do the todostatus
 
 export default function buttonEffect() {
     const content = document.getElementById('content')
@@ -68,7 +68,6 @@ export default function buttonEffect() {
                 yesno.remove()
                 const project = createProject(textbox.value)
 
-                console.log(project)
                 // projectArray.push(project)
                 // console.log(projectArray)
 
@@ -118,6 +117,9 @@ export default function buttonEffect() {
                     projectNewer.style.backgroundColor = 'rgb(196, 70, 70)'
                     projectNewer.style.color = 'white'
 
+                    // whenever u makea  new project the event listene ris added to it so it makes more and more forms, u can add an if that if there is already one then
+                    // stop or u can stop it at the root
+
                     project.todo.forEach((element) => {
                         const task = document.createElement('div')
                         task.classList.add('task')
@@ -142,131 +144,140 @@ export default function buttonEffect() {
                         no.addEventListener('click', () => {
                             task.remove()
                         })
-                        // const parsedIso = parseISO(dateitself.value)
-                        // if (isToday(parsedIso)) {
-                        //     dueofDate.style.color = 'green'
-                        //     indexList.push(element)
-                        //     todayList.push(element)
-                        // } else if (isPast(parsedIso)) {
-                        //     dueofDate.style.color = 'red'
-                        //     indexList.push(element)
-                        // } else if (!isPast(parsedIso)) {
-                        //     dueofDate.style.color = 'blue'
-                        //     upcomingList.push(element)
-                        // }
+
+                        const splitup = element.actualDate.split('/')
+                        const newdate = `${splitup[2]}-${splitup[1]}-${splitup[0]}`
+                        const parsedIso = parseISO(newdate)
+                        if (isToday(parsedIso)) {
+                            dueofDate.style.color = 'green'
+                            indexList.push(element)
+                            todayList.push(element)
+                        } else if (isPast(parsedIso)) {
+                            dueofDate.style.color = 'red'
+                            indexList.push(element)
+                        } else if (!isPast(parsedIso)) {
+                            dueofDate.style.color = 'blue'
+                            upcomingList.push(element)
+                        }
 
                         main.appendChild(taskNew)
                     })
 
-                    taskNew.addEventListener('click', () => {
-                        const formed = document.createElement('div')
-                        console.log('hellooo')
-                        formed.classList.add('formed')
-                        document.body.appendChild(formed)
-                        content.style.pointerEvents = 'none'
-                        content.style.filter = 'blur(5px)'
-                        const clickexit = document.createElement('button')
-                        clickexit.type = 'reset'
-                        clickexit.classList.add('clickexit')
-                        clickexit.innerHTML =
-                            '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
-                        formed.appendChild(clickexit)
+                    if (num !== 1) {
+                        taskNew.addEventListener('click', () => {
+                            const formed = document.createElement('div')
+                            formed.classList.add('formed')
+                            document.body.appendChild(formed)
+                            content.style.pointerEvents = 'none'
+                            content.style.filter = 'blur(5px)'
+                            const clickexit = document.createElement('button')
+                            clickexit.type = 'reset'
+                            clickexit.classList.add('clickexit')
+                            clickexit.innerHTML =
+                                '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                            formed.appendChild(clickexit)
 
-                        const taskcontainer = document.createElement('div')
-                        taskcontainer.classList.add('container')
-                        formed.appendChild(taskcontainer)
+                            const taskcontainer = document.createElement('div')
+                            taskcontainer.classList.add('container')
+                            formed.appendChild(taskcontainer)
 
-                        const tasklabel = document.createElement('label')
-                        tasklabel.textContent = 'Task'
-                        taskcontainer.appendChild(tasklabel)
+                            const tasklabel = document.createElement('label')
+                            tasklabel.textContent = 'Task'
+                            taskcontainer.appendChild(tasklabel)
 
-                        const taskname = document.createElement('input')
-                        taskcontainer.appendChild(taskname)
-                        taskname.required = 'true'
+                            const taskname = document.createElement('input')
+                            taskcontainer.appendChild(taskname)
+                            taskname.required = 'true'
 
-                        const datecontainer = document.createElement('div')
-                        datecontainer.classList.add('container')
-                        formed.appendChild(datecontainer)
+                            const datecontainer = document.createElement('div')
+                            datecontainer.classList.add('container')
+                            formed.appendChild(datecontainer)
 
-                        const datelabel = document.createElement('label')
-                        datelabel.textContent = 'Deadline'
-                        datecontainer.appendChild(datelabel)
+                            const datelabel = document.createElement('label')
+                            datelabel.textContent = 'Deadline'
+                            datecontainer.appendChild(datelabel)
 
-                        const dateitself = document.createElement('input')
-                        dateitself.type = 'date'
-                        datecontainer.appendChild(dateitself)
-                        dateitself.required = 'true'
+                            const dateitself = document.createElement('input')
+                            dateitself.type = 'date'
+                            datecontainer.appendChild(dateitself)
+                            dateitself.required = 'true'
 
-                        const buttoncreate = document.createElement('button')
-                        buttoncreate.classList.add('buttoncreate')
-                        buttoncreate.textContent = 'Create'
-                        formed.appendChild(buttoncreate)
+                            const buttoncreate =
+                                document.createElement('button')
+                            buttoncreate.classList.add('buttoncreate')
+                            buttoncreate.textContent = 'Create'
+                            formed.appendChild(buttoncreate)
 
-                        clickexit.addEventListener('click', () => {
-                            formed.remove()
-                            content.style.pointerEvents = 'all'
-                            content.style.filter = 'none'
-                        })
-
-                        function butcreate() {
-                            if (taskname.value && dateitself.value) {
-                                const createdTodo = createTodo(
-                                    taskname.value,
-                                    dateitself.value
-                                )
-                                // console.log(createdTodo)
-
-                                const task = document.createElement('div')
-                                task.classList.add('task')
-                                task.classList.add('tasks')
-                                main.appendChild(task)
-                                const checkbox = document.createElement('input')
-                                checkbox.type = 'checkbox'
-                                task.appendChild(checkbox)
-                                const textarea = document.createElement('h3')
-                                textarea.textContent = `${createdTodo.title}`
-                                task.appendChild(textarea)
-                                const dueofDate = document.createElement('h3')
-                                dueofDate.textContent = `${createdTodo.actualDate}`
-                                dueofDate.classList.add('dueofdate')
-                                task.appendChild(dueofDate)
-                                const no = document.createElement('button')
-                                no.classList.add('nope')
-                                no.type = 'reset'
-                                no.innerHTML =
-                                    '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
-                                task.appendChild(no)
-                                no.addEventListener('click', () => {
-                                    task.remove()
-                                })
-                                const parsedIso = parseISO(dateitself.value)
-                                if (isToday(parsedIso)) {
-                                    dueofDate.style.color = 'green'
-                                    indexList.push(createdTodo)
-                                    todayList.push(createdTodo)
-                                } else if (isPast(parsedIso)) {
-                                    dueofDate.style.color = 'red'
-                                    indexList.push(createdTodo)
-                                } else if (!isPast(parsedIso)) {
-                                    dueofDate.style.color = 'blue'
-                                    upcomingList.push(createdTodo)
-                                }
-
-                                main.appendChild(taskNew)
-
+                            clickexit.addEventListener('click', () => {
                                 formed.remove()
                                 content.style.pointerEvents = 'all'
                                 content.style.filter = 'none'
+                            })
 
-                                project.todo.push(createdTodo)
-                                console.log(project)
-                            } else {
-                                alert('Incomplete')
+                            function butcreate() {
+                                if (taskname.value && dateitself.value) {
+                                    const createdTodo = createTodo(
+                                        taskname.value,
+                                        dateitself.value
+                                    )
+                                    // console.log(createdTodo)
+
+                                    const task = document.createElement('div')
+                                    task.classList.add('task')
+                                    task.classList.add('tasks')
+                                    main.appendChild(task)
+                                    const checkbox =
+                                        document.createElement('input')
+                                    checkbox.type = 'checkbox'
+                                    task.appendChild(checkbox)
+                                    const textarea =
+                                        document.createElement('h3')
+                                    textarea.textContent = `${createdTodo.title}`
+                                    task.appendChild(textarea)
+                                    const dueofDate =
+                                        document.createElement('h3')
+                                    dueofDate.textContent = `${createdTodo.actualDate}`
+                                    dueofDate.classList.add('dueofdate')
+                                    task.appendChild(dueofDate)
+                                    const no = document.createElement('button')
+                                    no.classList.add('nope')
+                                    no.type = 'reset'
+                                    no.innerHTML =
+                                        '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                                    task.appendChild(no)
+                                    no.addEventListener('click', () => {
+                                        task.remove()
+                                    })
+
+                                    const parsedIso = parseISO(dateitself.value)
+                                    if (isToday(parsedIso)) {
+                                        dueofDate.style.color = 'green'
+                                        indexList.push(createdTodo)
+                                        todayList.push(createdTodo)
+                                    } else if (isPast(parsedIso)) {
+                                        dueofDate.style.color = 'red'
+                                        indexList.push(createdTodo)
+                                    } else if (!isPast(parsedIso)) {
+                                        dueofDate.style.color = 'blue'
+                                        upcomingList.push(createdTodo)
+                                    }
+
+                                    main.appendChild(taskNew)
+
+                                    formed.remove()
+                                    content.style.pointerEvents = 'all'
+                                    content.style.filter = 'none'
+
+                                    project.todo.push(createdTodo)
+                                } else {
+                                    alert('Incomplete')
+                                }
                             }
-                        }
 
-                        buttoncreate.addEventListener('click', butcreate)
-                    })
+                            buttoncreate.addEventListener('click', butcreate)
+                        })
+                        num++
+                    }
 
                     // const buttoncreate = document.querySelector('.buttoncreate')
                     // buttoncreate.addEventListener('click', () => {})

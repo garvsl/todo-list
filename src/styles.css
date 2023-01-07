@@ -343,6 +343,7 @@ textarea {
 .yesno {
     display: flex;
     align-items: center;
+    margin-top: 10px;
     flex-direction: column;
     gap: 10px;
     opacity: 1;
