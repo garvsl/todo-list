@@ -146,7 +146,7 @@ export default function buttonEffect() {
                         })
 
                         const splitup = element.actualDate.split('/')
-                        const newdate = `${splitup[2]}-${splitup[1]}-${splitup[0]}`
+                        const newdate = `${splitup[2]}-${splitup[0]}-${splitup[1]}`
                         const parsedIso = parseISO(newdate)
                         if (isToday(parsedIso)) {
                             dueofDate.style.color = 'green'

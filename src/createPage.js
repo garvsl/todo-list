@@ -1,12 +1,14 @@
 import { check } from 'prettier'
 import { isPast, parseISO, isToday } from 'date-fns'
+import createProject, { createTodo } from './createTodo'
 import mobileBut from './mobileButton'
 import buttonEffect, {
     indexList,
     upcomingList,
     todayList,
 } from './buttonEffects'
-import createProject from './createTodo'
+
+let num = 0
 
 export default function index() {
     // header
@@ -206,7 +208,7 @@ export default function index() {
             })
 
             const splitup = element.actualDate.split('/')
-            const newdate = `${splitup[2]}-${splitup[1]}-${splitup[0]}`
+            const newdate = `${splitup[2]}-${splitup[0]}-${splitup[1]}`
             const parsedIso = parseISO(newdate)
             if (isToday(parsedIso)) {
                 dueofDate.style.color = 'green'
@@ -219,121 +221,116 @@ export default function index() {
             main.appendChild(newtask)
         })
 
-        // if (num !== 1) {
-        //     taskNew.addEventListener('click', () => {
-        //         const formed = document.createElement('div')
-        //         formed.classList.add('formed')
-        //         document.body.appendChild(formed)
-        //         content.style.pointerEvents = 'none'
-        //         content.style.filter = 'blur(5px)'
-        //         const clickexit = document.createElement('button')
-        //         clickexit.type = 'reset'
-        //         clickexit.classList.add('clickexit')
-        //         clickexit.innerHTML =
-        //             '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
-        //         formed.appendChild(clickexit)
+        if (num !== 1) {
+            newtask.addEventListener('click', () => {
+                const formed = document.createElement('div')
+                formed.classList.add('formed')
+                document.body.appendChild(formed)
+                content.style.pointerEvents = 'none'
+                content.style.filter = 'blur(5px)'
+                const clickexit = document.createElement('button')
+                clickexit.type = 'reset'
+                clickexit.classList.add('clickexit')
+                clickexit.innerHTML =
+                    '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                formed.appendChild(clickexit)
 
-        //         const taskcontainer = document.createElement('div')
-        //         taskcontainer.classList.add('container')
-        //         formed.appendChild(taskcontainer)
+                const taskcontainer = document.createElement('div')
+                taskcontainer.classList.add('container')
+                formed.appendChild(taskcontainer)
 
-        //         const tasklabel = document.createElement('label')
-        //         tasklabel.textContent = 'Task'
-        //         taskcontainer.appendChild(tasklabel)
+                const tasklabel = document.createElement('label')
+                tasklabel.textContent = 'Task'
+                taskcontainer.appendChild(tasklabel)
 
-        //         const taskname = document.createElement('input')
-        //         taskcontainer.appendChild(taskname)
-        //         taskname.required = 'true'
+                const taskname = document.createElement('input')
+                taskcontainer.appendChild(taskname)
+                taskname.required = 'true'
 
-        //         const datecontainer = document.createElement('div')
-        //         datecontainer.classList.add('container')
-        //         formed.appendChild(datecontainer)
+                const datecontainer = document.createElement('div')
+                datecontainer.classList.add('container')
+                formed.appendChild(datecontainer)
 
-        //         const datelabel = document.createElement('label')
-        //         datelabel.textContent = 'Deadline'
-        //         datecontainer.appendChild(datelabel)
+                const datelabel = document.createElement('label')
+                datelabel.textContent = 'Deadline'
+                datecontainer.appendChild(datelabel)
 
-        //         const dateitself = document.createElement('input')
-        //         dateitself.type = 'date'
-        //         datecontainer.appendChild(dateitself)
-        //         dateitself.required = 'true'
+                const dateitself = document.createElement('input')
+                dateitself.type = 'date'
+                datecontainer.appendChild(dateitself)
+                dateitself.required = 'true'
 
-        //         const buttoncreate =
-        //             document.createElement('button')
-        //         buttoncreate.classList.add('buttoncreate')
-        //         buttoncreate.textContent = 'Create'
-        //         formed.appendChild(buttoncreate)
+                const buttoncreate = document.createElement('button')
+                buttoncreate.classList.add('buttoncreate')
+                buttoncreate.textContent = 'Create'
+                formed.appendChild(buttoncreate)
 
-        //         clickexit.addEventListener('click', () => {
-        //             formed.remove()
-        //             content.style.pointerEvents = 'all'
-        //             content.style.filter = 'none'
-        //         })
+                clickexit.addEventListener('click', () => {
+                    formed.remove()
+                    content.style.pointerEvents = 'all'
+                    content.style.filter = 'none'
+                })
 
-        //         function butcreate() {
-        //             if (taskname.value && dateitself.value) {
-        //                 const createdTodo = createTodo(
-        //                     taskname.value,
-        //                     dateitself.value
-        //                 )
-        //                 // console.log(createdTodo)
+                function butcreate() {
+                    if (taskname.value && dateitself.value) {
+                        const createdTodo = createTodo(
+                            taskname.value,
+                            dateitself.value
+                        )
+                        // console.log(createdTodo)
 
-        //                 const task = document.createElement('div')
-        //                 task.classList.add('task')
-        //                 task.classList.add('tasks')
-        //                 main.appendChild(task)
-        //                 const checkbox =
-        //                     document.createElement('input')
-        //                 checkbox.type = 'checkbox'
-        //                 task.appendChild(checkbox)
-        //                 const textarea =
-        //                     document.createElement('h3')
-        //                 textarea.textContent = `${createdTodo.title}`
-        //                 task.appendChild(textarea)
-        //                 const dueofDate =
-        //                     document.createElement('h3')
-        //                 dueofDate.textContent = `${createdTodo.actualDate}`
-        //                 dueofDate.classList.add('dueofdate')
-        //                 task.appendChild(dueofDate)
-        //                 const no = document.createElement('button')
-        //                 no.classList.add('nope')
-        //                 no.type = 'reset'
-        //                 no.innerHTML =
-        //                     '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
-        //                 task.appendChild(no)
-        //                 no.addEventListener('click', () => {
-        //                     task.remove()
-        //                 })
+                        const task = document.createElement('div')
+                        task.classList.add('task')
+                        task.classList.add('tasks')
+                        main.appendChild(task)
+                        const checkbox = document.createElement('input')
+                        checkbox.type = 'checkbox'
+                        task.appendChild(checkbox)
+                        const textarea = document.createElement('h3')
+                        textarea.textContent = `${createdTodo.title}`
+                        task.appendChild(textarea)
+                        const dueofDate = document.createElement('h3')
+                        dueofDate.textContent = `${createdTodo.actualDate}`
+                        dueofDate.classList.add('dueofdate')
+                        task.appendChild(dueofDate)
+                        const no = document.createElement('button')
+                        no.classList.add('nope')
+                        no.type = 'reset'
+                        no.innerHTML =
+                            '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                        task.appendChild(no)
+                        no.addEventListener('click', () => {
+                            task.remove()
+                        })
 
-        //                 const parsedIso = parseISO(dateitself.value)
-        //                 if (isToday(parsedIso)) {
-        //                     dueofDate.style.color = 'green'
-        //                     indexList.push(createdTodo)
-        //                     todayList.push(createdTodo)
-        //                 } else if (isPast(parsedIso)) {
-        //                     dueofDate.style.color = 'red'
-        //                     indexList.push(createdTodo)
-        //                 } else if (!isPast(parsedIso)) {
-        //                     dueofDate.style.color = 'blue'
-        //                     upcomingList.push(createdTodo)
-        //                 }
+                        const parsedIso = parseISO(dateitself.value)
+                        if (isToday(parsedIso)) {
+                            dueofDate.style.color = 'green'
+                            indexList.push(createdTodo)
+                            todayList.push(createdTodo)
+                        } else if (isPast(parsedIso)) {
+                            dueofDate.style.color = 'red'
+                            indexList.push(createdTodo)
+                        } else if (!isPast(parsedIso)) {
+                            dueofDate.style.color = 'blue'
+                            indexList.push(createdTodo)
+                            upcomingList.push(createdTodo)
+                        }
 
-        //                 main.appendChild(taskNew)
+                        main.appendChild(newtask)
 
-        //                 formed.remove()
-        //                 content.style.pointerEvents = 'all'
-        //                 content.style.filter = 'none'
+                        formed.remove()
+                        content.style.pointerEvents = 'all'
+                        content.style.filter = 'none'
+                    } else {
+                        alert('Incomplete')
+                    }
+                }
 
-        //                 project.todo.push(createdTodo)
-        //             } else {
-        //                 alert('Incomplete')
-        //             }
-        //         }
-
-        //         buttoncreate.addEventListener('click', butcreate)
-        //     })
-        //     num++
-        // }
+                buttoncreate.addEventListener('click', butcreate)
+            })
+            num++
+        }
     })
 
     tabTwo.addEventListener('click', () => {
@@ -381,7 +378,7 @@ export default function index() {
             })
 
             const splitup = element.actualDate.split('/')
-            const newdate = `${splitup[2]}-${splitup[1]}-${splitup[0]}`
+            const newdate = `${splitup[2]}-${splitup[0]}-${splitup[1]}`
             const parsedIso = parseISO(newdate)
             if (isToday(parsedIso)) {
                 dueofDate.style.color = 'green'
@@ -393,6 +390,117 @@ export default function index() {
 
             main.appendChild(newtask)
         })
+
+        if (num !== 1) {
+            newtask.addEventListener('click', () => {
+                const formed = document.createElement('div')
+                formed.classList.add('formed')
+                document.body.appendChild(formed)
+                content.style.pointerEvents = 'none'
+                content.style.filter = 'blur(5px)'
+                const clickexit = document.createElement('button')
+                clickexit.type = 'reset'
+                clickexit.classList.add('clickexit')
+                clickexit.innerHTML =
+                    '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                formed.appendChild(clickexit)
+
+                const taskcontainer = document.createElement('div')
+                taskcontainer.classList.add('container')
+                formed.appendChild(taskcontainer)
+
+                const tasklabel = document.createElement('label')
+                tasklabel.textContent = 'Task'
+                taskcontainer.appendChild(tasklabel)
+
+                const taskname = document.createElement('input')
+                taskcontainer.appendChild(taskname)
+                taskname.required = 'true'
+
+                const datecontainer = document.createElement('div')
+                datecontainer.classList.add('container')
+                formed.appendChild(datecontainer)
+
+                const datelabel = document.createElement('label')
+                datelabel.textContent = 'Deadline'
+                datecontainer.appendChild(datelabel)
+
+                const dateitself = document.createElement('input')
+                dateitself.type = 'date'
+                datecontainer.appendChild(dateitself)
+                dateitself.required = 'true'
+
+                const buttoncreate = document.createElement('button')
+                buttoncreate.classList.add('buttoncreate')
+                buttoncreate.textContent = 'Create'
+                formed.appendChild(buttoncreate)
+
+                clickexit.addEventListener('click', () => {
+                    formed.remove()
+                    content.style.pointerEvents = 'all'
+                    content.style.filter = 'none'
+                })
+
+                function butcreate() {
+                    if (taskname.value && dateitself.value) {
+                        const createdTodo = createTodo(
+                            taskname.value,
+                            dateitself.value
+                        )
+                        // console.log(createdTodo)
+
+                        const task = document.createElement('div')
+                        task.classList.add('task')
+                        task.classList.add('tasks')
+                        main.appendChild(task)
+                        const checkbox = document.createElement('input')
+                        checkbox.type = 'checkbox'
+                        task.appendChild(checkbox)
+                        const textarea = document.createElement('h3')
+                        textarea.textContent = `${createdTodo.title}`
+                        task.appendChild(textarea)
+                        const dueofDate = document.createElement('h3')
+                        dueofDate.textContent = `${createdTodo.actualDate}`
+                        dueofDate.classList.add('dueofdate')
+                        task.appendChild(dueofDate)
+                        const no = document.createElement('button')
+                        no.classList.add('nope')
+                        no.type = 'reset'
+                        no.innerHTML =
+                            '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                        task.appendChild(no)
+                        no.addEventListener('click', () => {
+                            task.remove()
+                        })
+
+                        const parsedIso = parseISO(dateitself.value)
+                        if (isToday(parsedIso)) {
+                            dueofDate.style.color = 'green'
+                            indexList.push(createdTodo)
+                            todayList.push(createdTodo)
+                        } else if (isPast(parsedIso)) {
+                            dueofDate.style.color = 'red'
+                            indexList.push(createdTodo)
+                        } else if (!isPast(parsedIso)) {
+                            dueofDate.style.color = 'blue'
+                            indexList.push(createdTodo)
+                            upcomingList.push(createdTodo)
+                        }
+
+                        main.appendChild(newtask)
+
+                        formed.remove()
+                        content.style.pointerEvents = 'all'
+                        content.style.filter = 'none'
+                    } else {
+                        alert('Incomplete')
+                    }
+                }
+
+                buttoncreate.addEventListener('click', butcreate)
+            })
+            num++
+        }
     })
 
     tabThree.addEventListener('click', () => {
@@ -440,7 +548,7 @@ export default function index() {
             })
 
             const splitup = element.actualDate.split('/')
-            const newdate = `${splitup[2]}-${splitup[1]}-${splitup[0]}`
+            const newdate = `${splitup[2]}-${splitup[0]}-${splitup[1]}`
             const parsedIso = parseISO(newdate)
             if (isToday(parsedIso)) {
                 dueofDate.style.color = 'green'
@@ -452,5 +560,116 @@ export default function index() {
 
             main.appendChild(newtask)
         })
+
+        if (num !== 1) {
+            newtask.addEventListener('click', () => {
+                const formed = document.createElement('div')
+                formed.classList.add('formed')
+                document.body.appendChild(formed)
+                content.style.pointerEvents = 'none'
+                content.style.filter = 'blur(5px)'
+                const clickexit = document.createElement('button')
+                clickexit.type = 'reset'
+                clickexit.classList.add('clickexit')
+                clickexit.innerHTML =
+                    '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                formed.appendChild(clickexit)
+
+                const taskcontainer = document.createElement('div')
+                taskcontainer.classList.add('container')
+                formed.appendChild(taskcontainer)
+
+                const tasklabel = document.createElement('label')
+                tasklabel.textContent = 'Task'
+                taskcontainer.appendChild(tasklabel)
+
+                const taskname = document.createElement('input')
+                taskcontainer.appendChild(taskname)
+                taskname.required = 'true'
+
+                const datecontainer = document.createElement('div')
+                datecontainer.classList.add('container')
+                formed.appendChild(datecontainer)
+
+                const datelabel = document.createElement('label')
+                datelabel.textContent = 'Deadline'
+                datecontainer.appendChild(datelabel)
+
+                const dateitself = document.createElement('input')
+                dateitself.type = 'date'
+                datecontainer.appendChild(dateitself)
+                dateitself.required = 'true'
+
+                const buttoncreate = document.createElement('button')
+                buttoncreate.classList.add('buttoncreate')
+                buttoncreate.textContent = 'Create'
+                formed.appendChild(buttoncreate)
+
+                clickexit.addEventListener('click', () => {
+                    formed.remove()
+                    content.style.pointerEvents = 'all'
+                    content.style.filter = 'none'
+                })
+
+                function butcreate() {
+                    if (taskname.value && dateitself.value) {
+                        const createdTodo = createTodo(
+                            taskname.value,
+                            dateitself.value
+                        )
+                        // console.log(createdTodo)
+
+                        const task = document.createElement('div')
+                        task.classList.add('task')
+                        task.classList.add('tasks')
+                        main.appendChild(task)
+                        const checkbox = document.createElement('input')
+                        checkbox.type = 'checkbox'
+                        task.appendChild(checkbox)
+                        const textarea = document.createElement('h3')
+                        textarea.textContent = `${createdTodo.title}`
+                        task.appendChild(textarea)
+                        const dueofDate = document.createElement('h3')
+                        dueofDate.textContent = `${createdTodo.actualDate}`
+                        dueofDate.classList.add('dueofdate')
+                        task.appendChild(dueofDate)
+                        const no = document.createElement('button')
+                        no.classList.add('nope')
+                        no.type = 'reset'
+                        no.innerHTML =
+                            '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                        task.appendChild(no)
+                        no.addEventListener('click', () => {
+                            task.remove()
+                        })
+
+                        const parsedIso = parseISO(dateitself.value)
+                        if (isToday(parsedIso)) {
+                            dueofDate.style.color = 'green'
+                            indexList.push(createdTodo)
+                            todayList.push(createdTodo)
+                        } else if (isPast(parsedIso)) {
+                            dueofDate.style.color = 'red'
+                            indexList.push(createdTodo)
+                        } else if (!isPast(parsedIso)) {
+                            dueofDate.style.color = 'blue'
+                            indexList.push(createdTodo)
+                            upcomingList.push(createdTodo)
+                        }
+
+                        main.appendChild(newtask)
+
+                        formed.remove()
+                        content.style.pointerEvents = 'all'
+                        content.style.filter = 'none'
+                    } else {
+                        alert('Incomplete')
+                    }
+                }
+
+                buttoncreate.addEventListener('click', butcreate)
+            })
+            num++
+        }
     })
 }
