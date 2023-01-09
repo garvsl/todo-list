@@ -1,6 +1,7 @@
+import './styles.css'
 import { isPast, parseISO, isToday } from 'date-fns'
 import createProject, { createTodo, todoStatus } from './createTodo'
-import './styles.css'
+
 // so make a list for each project/tab and whcihever list it is in the new task will be appened to that, the only thing this doesnt apply
 // to is the inbox/today/upcoming those are automatic due to the date, so basically only the projects
 //
