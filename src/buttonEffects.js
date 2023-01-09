@@ -1,11 +1,6 @@
 import { isPast, parseISO, isToday } from 'date-fns'
 import createProject, { createTodo, todoStatus } from './createTodo'
 
-export const indexList = []
-export const todayList = []
-export const upcomingList = []
-let num = 0
-
 // so make a list for each project/tab and whcihever list it is in the new task will be appened to that, the only thing this doesnt apply
 // to is the inbox/today/upcoming those are automatic due to the date, so basically only the projects
 //
@@ -21,12 +16,12 @@ let num = 0
 
 // still have to do the todostatus
 
-export default function buttonEffect() {
+export default function buttonEffect(indexList, todayList, upcomingList) {
     const content = document.getElementById('content')
     const projectNew = document.querySelector('.new')
     const projects = document.querySelector('.projects')
     const main = document.querySelector('.main')
-    const taskNew = document.querySelector('.newer')
+    let taskNew = document.querySelector('.newer')
 
     projectNew.addEventListener('click', () => {
         projectNew.style.display = 'none'
@@ -111,7 +106,8 @@ export default function buttonEffect() {
                         element.style.color = 'black'
                         element.style.backgroundColor = 'transparent'
                     })
-                    tasks.forEach((element) => {
+                    const taskes = document.querySelectorAll('.tasks')
+                    taskes.forEach((element) => {
                         element.remove()
                     })
                     projectNewer.style.backgroundColor = 'rgb(196, 70, 70)'
@@ -150,134 +146,181 @@ export default function buttonEffect() {
                         const parsedIso = parseISO(newdate)
                         if (isToday(parsedIso)) {
                             dueofDate.style.color = 'green'
-                            indexList.push(element)
-                            todayList.push(element)
                         } else if (isPast(parsedIso)) {
                             dueofDate.style.color = 'red'
-                            indexList.push(element)
                         } else if (!isPast(parsedIso)) {
                             dueofDate.style.color = 'blue'
-                            upcomingList.push(element)
                         }
-
-                        main.appendChild(taskNew)
                     })
 
-                    if (num !== 1) {
-                        taskNew.addEventListener('click', () => {
-                            const formed = document.createElement('div')
-                            formed.classList.add('formed')
-                            document.body.appendChild(formed)
-                            content.style.pointerEvents = 'none'
-                            content.style.filter = 'blur(5px)'
-                            const clickexit = document.createElement('button')
-                            clickexit.type = 'reset'
-                            clickexit.classList.add('clickexit')
-                            clickexit.innerHTML =
-                                '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
-                            formed.appendChild(clickexit)
+                    const allNew = document.querySelectorAll('.newer')
+                    allNew.forEach((element) => {
+                        element.remove()
+                    })
+                    const newestTask = document.createElement('div')
+                    newestTask.classList.add('task')
+                    newestTask.classList.add('new')
+                    newestTask.classList.add('newer')
 
-                            const taskcontainer = document.createElement('div')
-                            taskcontainer.classList.add('container')
-                            formed.appendChild(taskcontainer)
+                    const newerSvg = document.createElement('svg')
+                    newerSvg.innerHTML =
+                        '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
+                    newestTask.appendChild(newerSvg)
 
-                            const tasklabel = document.createElement('label')
-                            tasklabel.textContent = 'Task'
-                            taskcontainer.appendChild(tasklabel)
+                    const newerAdd = document.createElement('h3')
+                    newerAdd.textContent = 'Add new task'
+                    newestTask.appendChild(newerAdd)
 
-                            const taskname = document.createElement('input')
-                            taskcontainer.appendChild(taskname)
-                            taskname.required = 'true'
+                    main.appendChild(newestTask)
 
-                            const datecontainer = document.createElement('div')
-                            datecontainer.classList.add('container')
-                            formed.appendChild(datecontainer)
+                    const taskSvg = document.createElement('svg')
+                    taskSvg.innerHTML =
+                        '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
+                    taskNew.appendChild(taskSvg)
 
-                            const datelabel = document.createElement('label')
-                            datelabel.textContent = 'Deadline'
-                            datecontainer.appendChild(datelabel)
+                    const addNew = document.createElement('h3')
+                    addNew.textContent = 'Add new task'
+                    taskNew.appendChild(addNew)
 
-                            const dateitself = document.createElement('input')
-                            dateitself.type = 'date'
-                            datecontainer.appendChild(dateitself)
-                            dateitself.required = 'true'
+                    taskNew = document.querySelector('.newer')
+                    taskNew.addEventListener('click', () => {
+                        const formed = document.createElement('div')
+                        formed.classList.add('formed')
+                        document.body.appendChild(formed)
+                        content.style.pointerEvents = 'none'
+                        content.style.filter = 'blur(5px)'
+                        const clickexit = document.createElement('button')
+                        clickexit.type = 'reset'
+                        clickexit.classList.add('clickexit')
+                        clickexit.innerHTML =
+                            '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                        formed.appendChild(clickexit)
 
-                            const buttoncreate =
-                                document.createElement('button')
-                            buttoncreate.classList.add('buttoncreate')
-                            buttoncreate.textContent = 'Create'
-                            formed.appendChild(buttoncreate)
+                        const taskcontainer = document.createElement('div')
+                        taskcontainer.classList.add('container')
+                        formed.appendChild(taskcontainer)
 
-                            clickexit.addEventListener('click', () => {
+                        const tasklabel = document.createElement('label')
+                        tasklabel.textContent = 'Task'
+                        taskcontainer.appendChild(tasklabel)
+
+                        const taskname = document.createElement('input')
+                        taskcontainer.appendChild(taskname)
+                        taskname.required = 'true'
+
+                        const datecontainer = document.createElement('div')
+                        datecontainer.classList.add('container')
+                        formed.appendChild(datecontainer)
+
+                        const datelabel = document.createElement('label')
+                        datelabel.textContent = 'Deadline'
+                        datecontainer.appendChild(datelabel)
+
+                        const dateitself = document.createElement('input')
+                        dateitself.type = 'date'
+                        datecontainer.appendChild(dateitself)
+                        dateitself.required = 'true'
+
+                        const buttoncreate = document.createElement('button')
+                        buttoncreate.classList.add('buttoncreate')
+                        buttoncreate.textContent = 'Create'
+                        formed.appendChild(buttoncreate)
+
+                        clickexit.addEventListener('click', () => {
+                            formed.remove()
+                            content.style.pointerEvents = 'all'
+                            content.style.filter = 'none'
+                        })
+
+                        function butcreate() {
+                            if (taskname.value && dateitself.value) {
+                                const createdTodo = createTodo(
+                                    taskname.value,
+                                    dateitself.value
+                                )
+                                // console.log(createdTodo)
+
+                                const task = document.createElement('div')
+                                task.classList.add('task')
+                                task.classList.add('tasks')
+                                main.appendChild(task)
+                                const checkbox = document.createElement('input')
+                                checkbox.type = 'checkbox'
+                                task.appendChild(checkbox)
+                                const textarea = document.createElement('h3')
+                                textarea.textContent = `${createdTodo.title}`
+                                task.appendChild(textarea)
+                                const dueofDate = document.createElement('h3')
+                                dueofDate.textContent = `${createdTodo.actualDate}`
+                                dueofDate.classList.add('dueofdate')
+                                task.appendChild(dueofDate)
+                                const no = document.createElement('button')
+                                no.classList.add('nope')
+                                no.type = 'reset'
+                                no.innerHTML =
+                                    '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                                task.appendChild(no)
+                                no.addEventListener('click', () => {
+                                    task.remove()
+                                })
+
+                                const parsedIso = parseISO(dateitself.value)
+                                if (isToday(parsedIso)) {
+                                    dueofDate.style.color = 'green'
+                                    indexList.push(createdTodo)
+                                    todayList.push(createdTodo)
+                                } else if (isPast(parsedIso)) {
+                                    dueofDate.style.color = 'red'
+                                    indexList.push(createdTodo)
+                                } else if (!isPast(parsedIso)) {
+                                    dueofDate.style.color = 'blue'
+                                    upcomingList.push(createdTodo)
+                                    indexList.push(createdTodo)
+                                }
+
+                                // const allNew =
+                                //     document.querySelectorAll('.newer')
+                                // allNew.forEach((element) => {
+                                //     element.remove()
+                                // })
+                                // const newestTask = document.createElement('div')
+                                // newestTask.classList.add('task')
+                                // newestTask.classList.add('new')
+                                // newestTask.classList.add('newer')
+
+                                // const newerSvg = document.createElement('svg')
+                                // newerSvg.innerHTML =
+                                //     '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
+                                // newestTask.appendChild(newerSvg)
+
+                                // const newerAdd = document.createElement('h3')
+                                // newerAdd.textContent = 'Add new task'
+                                // newestTask.appendChild(newerAdd)
+
+                                // main.appendChild(newestTask)
+
+                                // const taskSvg = document.createElement('svg')
+                                // taskSvg.innerHTML =
+                                //     '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
+                                // taskNew.appendChild(taskSvg)
+
+                                // const addNew = document.createElement('h3')
+                                // addNew.textContent = 'Add new task'
+                                // taskNew.appendChild(addNew)
+                                taskNew = document.querySelector('.newer')
+                                main.appendChild(taskNew)
                                 formed.remove()
                                 content.style.pointerEvents = 'all'
                                 content.style.filter = 'none'
-                            })
 
-                            function butcreate() {
-                                if (taskname.value && dateitself.value) {
-                                    const createdTodo = createTodo(
-                                        taskname.value,
-                                        dateitself.value
-                                    )
-                                    // console.log(createdTodo)
-
-                                    const task = document.createElement('div')
-                                    task.classList.add('task')
-                                    task.classList.add('tasks')
-                                    main.appendChild(task)
-                                    const checkbox =
-                                        document.createElement('input')
-                                    checkbox.type = 'checkbox'
-                                    task.appendChild(checkbox)
-                                    const textarea =
-                                        document.createElement('h3')
-                                    textarea.textContent = `${createdTodo.title}`
-                                    task.appendChild(textarea)
-                                    const dueofDate =
-                                        document.createElement('h3')
-                                    dueofDate.textContent = `${createdTodo.actualDate}`
-                                    dueofDate.classList.add('dueofdate')
-                                    task.appendChild(dueofDate)
-                                    const no = document.createElement('button')
-                                    no.classList.add('nope')
-                                    no.type = 'reset'
-                                    no.innerHTML =
-                                        '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
-                                    task.appendChild(no)
-                                    no.addEventListener('click', () => {
-                                        task.remove()
-                                    })
-
-                                    const parsedIso = parseISO(dateitself.value)
-                                    if (isToday(parsedIso)) {
-                                        dueofDate.style.color = 'green'
-                                        indexList.push(createdTodo)
-                                        todayList.push(createdTodo)
-                                    } else if (isPast(parsedIso)) {
-                                        dueofDate.style.color = 'red'
-                                        indexList.push(createdTodo)
-                                    } else if (!isPast(parsedIso)) {
-                                        dueofDate.style.color = 'blue'
-                                        upcomingList.push(createdTodo)
-                                    }
-
-                                    main.appendChild(taskNew)
-
-                                    formed.remove()
-                                    content.style.pointerEvents = 'all'
-                                    content.style.filter = 'none'
-
-                                    project.todo.push(createdTodo)
-                                } else {
-                                    alert('Incomplete')
-                                }
+                                project.todo.push(createdTodo)
+                            } else {
+                                alert('Incomplete')
                             }
+                        }
 
-                            buttoncreate.addEventListener('click', butcreate)
-                        })
-                        num++
-                    }
+                        buttoncreate.addEventListener('click', butcreate)
+                    })
 
                     // const buttoncreate = document.querySelector('.buttoncreate')
                     // buttoncreate.addEventListener('click', () => {})

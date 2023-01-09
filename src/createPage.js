@@ -2,13 +2,13 @@ import { check } from 'prettier'
 import { isPast, parseISO, isToday } from 'date-fns'
 import createProject, { createTodo } from './createTodo'
 import mobileBut from './mobileButton'
-import buttonEffect, {
-    indexList,
-    upcomingList,
-    todayList,
-} from './buttonEffects'
+import buttonEffect from './buttonEffects'
 
-let num = 0
+const indexList = []
+const todayList = []
+const upcomingList = []
+
+const num = 0
 
 export default function index() {
     // header
@@ -157,7 +157,7 @@ export default function index() {
     newtask.appendChild(addNew)
 
     mobileBut()
-    buttonEffect()
+    buttonEffect(indexList, todayList, upcomingList)
 
     no.addEventListener('click', () => {
         task.remove()
@@ -218,7 +218,25 @@ export default function index() {
                 dueofDate.style.color = 'blue'
             }
 
-            main.appendChild(newtask)
+            const allNew = document.querySelectorAll('.newer')
+            allNew.forEach((element) => {
+                element.remove()
+            })
+            const newestTask = document.createElement('div')
+            newestTask.classList.add('task')
+            newestTask.classList.add('new')
+            newestTask.classList.add('newer')
+
+            const newerSvg = document.createElement('svg')
+            newerSvg.innerHTML =
+                '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
+            newestTask.appendChild(newerSvg)
+
+            const newerAdd = document.createElement('h3')
+            newerAdd.textContent = 'Add new task'
+            newestTask.appendChild(newerAdd)
+
+            main.appendChild(newestTask)
         })
 
         if (num !== 1) {
@@ -317,7 +335,25 @@ export default function index() {
                             upcomingList.push(createdTodo)
                         }
 
-                        main.appendChild(newtask)
+                        const allNew = document.querySelectorAll('.newer')
+                        allNew.forEach((element) => {
+                            element.remove()
+                        })
+                        const newestTask = document.createElement('div')
+                        newestTask.classList.add('task')
+                        newestTask.classList.add('new')
+                        newestTask.classList.add('newer')
+
+                        const newerSvg = document.createElement('svg')
+                        newerSvg.innerHTML =
+                            '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
+                        newestTask.appendChild(newerSvg)
+
+                        const newerAdd = document.createElement('h3')
+                        newerAdd.textContent = 'Add new task'
+                        newestTask.appendChild(newerAdd)
+
+                        main.appendChild(newestTask)
 
                         formed.remove()
                         content.style.pointerEvents = 'all'
@@ -329,7 +365,6 @@ export default function index() {
 
                 buttoncreate.addEventListener('click', butcreate)
             })
-            num++
         }
     })
 
@@ -388,7 +423,25 @@ export default function index() {
                 dueofDate.style.color = 'blue'
             }
 
-            main.appendChild(newtask)
+            const allNew = document.querySelectorAll('.newer')
+            allNew.forEach((element) => {
+                element.remove()
+            })
+            const newestTask = document.createElement('div')
+            newestTask.classList.add('task')
+            newestTask.classList.add('new')
+            newestTask.classList.add('newer')
+
+            const newerSvg = document.createElement('svg')
+            newerSvg.innerHTML =
+                '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
+            newestTask.appendChild(newerSvg)
+
+            const newerAdd = document.createElement('h3')
+            newerAdd.textContent = 'Add new task'
+            newestTask.appendChild(newerAdd)
+
+            main.appendChild(newestTask)
         })
 
         if (num !== 1) {
@@ -487,7 +540,25 @@ export default function index() {
                             upcomingList.push(createdTodo)
                         }
 
-                        main.appendChild(newtask)
+                        const allNew = document.querySelectorAll('.newer')
+                        allNew.forEach((element) => {
+                            element.remove()
+                        })
+                        const newestTask = document.createElement('div')
+                        newestTask.classList.add('task')
+                        newestTask.classList.add('new')
+                        newestTask.classList.add('newer')
+
+                        const newerSvg = document.createElement('svg')
+                        newerSvg.innerHTML =
+                            '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
+                        newestTask.appendChild(newerSvg)
+
+                        const newerAdd = document.createElement('h3')
+                        newerAdd.textContent = 'Add new task'
+                        newestTask.appendChild(newerAdd)
+
+                        main.appendChild(newestTask)
 
                         formed.remove()
                         content.style.pointerEvents = 'all'
@@ -499,7 +570,6 @@ export default function index() {
 
                 buttoncreate.addEventListener('click', butcreate)
             })
-            num++
         }
     })
 
@@ -558,7 +628,25 @@ export default function index() {
                 dueofDate.style.color = 'blue'
             }
 
-            main.appendChild(newtask)
+            const allNew = document.querySelectorAll('.newer')
+            allNew.forEach((element) => {
+                element.remove()
+            })
+            const newestTask = document.createElement('div')
+            newestTask.classList.add('task')
+            newestTask.classList.add('new')
+            newestTask.classList.add('newer')
+
+            const newerSvg = document.createElement('svg')
+            newerSvg.innerHTML =
+                '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
+            newestTask.appendChild(newerSvg)
+
+            const newerAdd = document.createElement('h3')
+            newerAdd.textContent = 'Add new task'
+            newestTask.appendChild(newerAdd)
+
+            main.appendChild(newestTask)
         })
 
         if (num !== 1) {
@@ -657,7 +745,25 @@ export default function index() {
                             upcomingList.push(createdTodo)
                         }
 
-                        main.appendChild(newtask)
+                        const allNew = document.querySelectorAll('.newer')
+                        allNew.forEach((element) => {
+                            element.remove()
+                        })
+                        const newestTask = document.createElement('div')
+                        newestTask.classList.add('task')
+                        newestTask.classList.add('new')
+                        newestTask.classList.add('newer')
+
+                        const newerSvg = document.createElement('svg')
+                        newerSvg.innerHTML =
+                            '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
+                        newestTask.appendChild(newerSvg)
+
+                        const newerAdd = document.createElement('h3')
+                        newerAdd.textContent = 'Add new task'
+                        newestTask.appendChild(newerAdd)
+
+                        main.appendChild(newestTask)
 
                         formed.remove()
                         content.style.pointerEvents = 'all'
@@ -669,7 +775,6 @@ export default function index() {
 
                 buttoncreate.addEventListener('click', butcreate)
             })
-            num++
         }
     })
 }
