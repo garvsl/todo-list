@@ -3,6 +3,7 @@ import { isPast, parseISO, isToday } from 'date-fns'
 import createProject, { createTodo } from './createTodo'
 import mobileBut from './mobileButton'
 import buttonEffect from './buttonEffects'
+import './styles.css'
 
 const indexList = []
 const todayList = []
