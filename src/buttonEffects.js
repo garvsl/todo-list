@@ -137,8 +137,70 @@ export default function buttonEffect(indexList, todayList, upcomingList) {
                         no.innerHTML =
                             '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
                         task.appendChild(no)
+
                         no.addEventListener('click', () => {
-                            task.remove()
+                            task.style.opacity = '0'
+                            setTimeout(() => {
+                                task.remove()
+
+                                const index = project.todo.indexOf(element)
+
+                                if (index > -1) {
+                                    project.todo.splice(index, 1)
+                                }
+                                const indexIndex = indexList.indexOf(element)
+
+                                if (indexIndex > -1) {
+                                    indexList.splice(indexIndex, 1)
+                                }
+                                const todayIndex = todayList.indexOf(element)
+
+                                if (todayIndex > -1) {
+                                    todayList.splice(todayIndex, 1)
+                                }
+
+                                const upcomingIndex =
+                                    upcomingList.indexOf(element)
+
+                                if (upcomingIndex > -1) {
+                                    upcomingList.splice(upcomingIndex, 1)
+                                }
+                            }, 350)
+                        })
+
+                        checkbox.addEventListener('change', () => {
+                            setTimeout(() => {
+                                task.style.opacity = '0'
+                                setTimeout(() => {
+                                    task.remove()
+
+                                    const index = project.todo.indexOf(element)
+
+                                    if (index > -1) {
+                                        project.todo.splice(index, 1)
+                                    }
+
+                                    const indexIndex =
+                                        indexList.indexOf(element)
+
+                                    if (indexIndex > -1) {
+                                        indexList.splice(indexIndex, 1)
+                                    }
+                                    const todayIndex =
+                                        todayList.indexOf(element)
+
+                                    if (todayIndex > -1) {
+                                        todayList.splice(todayIndex, 1)
+                                    }
+
+                                    const upcomingIndex =
+                                        upcomingList.indexOf(element)
+
+                                    if (upcomingIndex > -1) {
+                                        upcomingList.splice(upcomingIndex, 1)
+                                    }
+                                }, 350)
+                            }, 350)
                         })
 
                         const splitup = element.actualDate.split('/')
@@ -260,8 +322,83 @@ export default function buttonEffect(indexList, todayList, upcomingList) {
                                 no.innerHTML =
                                     '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
                                 task.appendChild(no)
+
                                 no.addEventListener('click', () => {
-                                    task.remove()
+                                    task.style.opacity = '0'
+                                    setTimeout(() => {
+                                        task.remove()
+                                        const index =
+                                            project.todo.indexOf(createdTodo)
+
+                                        if (index > -1) {
+                                            project.todo.splice(index, 1)
+                                        }
+                                        const indexIndex =
+                                            indexList.indexOf(createdTodo)
+
+                                        if (indexIndex > -1) {
+                                            indexList.splice(indexIndex, 1)
+                                        }
+                                        const todayIndex =
+                                            todayList.indexOf(createdTodo)
+
+                                        if (todayIndex > -1) {
+                                            todayList.splice(todayIndex, 1)
+                                        }
+
+                                        const upcomingIndex =
+                                            upcomingList.indexOf(createdTodo)
+
+                                        if (upcomingIndex > -1) {
+                                            upcomingList.splice(
+                                                upcomingIndex,
+                                                1
+                                            )
+                                        }
+                                    }, 350)
+                                })
+
+                                checkbox.addEventListener('change', () => {
+                                    setTimeout(() => {
+                                        task.style.opacity = '0'
+                                        setTimeout(() => {
+                                            task.remove()
+
+                                            const index =
+                                                project.todo.indexOf(
+                                                    createdTodo
+                                                )
+
+                                            if (index > -1) {
+                                                project.todo.splice(index, 1)
+                                            }
+
+                                            const indexIndex =
+                                                indexList.indexOf(createdTodo)
+
+                                            if (indexIndex > -1) {
+                                                indexList.splice(indexIndex, 1)
+                                            }
+                                            const todayIndex =
+                                                todayList.indexOf(createdTodo)
+
+                                            if (todayIndex > -1) {
+                                                todayList.splice(todayIndex, 1)
+                                            }
+
+                                            const upcomingIndex =
+                                                upcomingList.indexOf(
+                                                    createdTodo
+                                                )
+
+                                            if (upcomingIndex > -1) {
+                                                upcomingList.splice(
+                                                    upcomingIndex,
+                                                    1
+                                                )
+                                            }
+                                        }, 350)
+                                    }, 350)
                                 })
 
                                 const parsedIso = parseISO(dateitself.value)

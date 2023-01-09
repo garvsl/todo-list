@@ -116,31 +116,6 @@ export default function index() {
     todoTitle.textContent = 'Inbox'
     main.appendChild(todoTitle)
 
-    const task = document.createElement('div')
-    task.classList.add('task')
-    task.classList.add('tasks')
-    main.appendChild(task)
-
-    const checkbox = document.createElement('input')
-    checkbox.type = 'checkbox'
-    task.appendChild(checkbox)
-
-    const textarea = document.createElement('h3')
-    textarea.textContent = '...'
-    task.appendChild(textarea)
-
-    const dueofDate = document.createElement('h3')
-    dueofDate.textContent = 'mm/dd/yyyy'
-    dueofDate.classList.add('dueofdate')
-    task.appendChild(dueofDate)
-
-    const no = document.createElement('button')
-    no.classList.add('nope')
-    no.type = 'reset'
-    no.innerHTML =
-        '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
-    task.appendChild(no)
-
     const newtask = document.createElement('div')
     newtask.classList.add('task')
     newtask.classList.add('new')
@@ -158,10 +133,6 @@ export default function index() {
 
     mobileBut()
     buttonEffect(indexList, todayList, upcomingList)
-
-    no.addEventListener('click', () => {
-        task.remove()
-    })
 
     tabOne.addEventListener('click', () => {
         const allProjects = document.querySelectorAll('.project')
@@ -204,7 +175,53 @@ export default function index() {
                 '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
             task.appendChild(no)
             no.addEventListener('click', () => {
-                task.remove()
+                task.style.opacity = '0'
+                setTimeout(() => {
+                    task.remove()
+
+                    const indexIndex = indexList.indexOf(element)
+
+                    if (indexIndex > -1) {
+                        indexList.splice(indexIndex, 1)
+                    }
+                    const todayIndex = todayList.indexOf(element)
+
+                    if (todayIndex > -1) {
+                        todayList.splice(todayIndex, 1)
+                    }
+
+                    const upcomingIndex = upcomingList.indexOf(element)
+
+                    if (upcomingIndex > -1) {
+                        upcomingList.splice(upcomingIndex, 1)
+                    }
+                }, 350)
+            })
+
+            checkbox.addEventListener('change', () => {
+                setTimeout(() => {
+                    task.style.opacity = '0'
+                    setTimeout(() => {
+                        task.remove()
+
+                        const indexIndex = indexList.indexOf(element)
+
+                        if (indexIndex > -1) {
+                            indexList.splice(indexIndex, 1)
+                        }
+                        const todayIndex = todayList.indexOf(element)
+
+                        if (todayIndex > -1) {
+                            todayList.splice(todayIndex, 1)
+                        }
+
+                        const upcomingIndex = upcomingList.indexOf(element)
+
+                        if (upcomingIndex > -1) {
+                            upcomingList.splice(upcomingIndex, 1)
+                        }
+                    }, 350)
+                }, 350)
             })
 
             const splitup = element.actualDate.split('/')
@@ -217,30 +234,31 @@ export default function index() {
             } else if (!isPast(parsedIso)) {
                 dueofDate.style.color = 'blue'
             }
-
-            const allNew = document.querySelectorAll('.newer')
-            allNew.forEach((element) => {
-                element.remove()
-            })
-            const newestTask = document.createElement('div')
-            newestTask.classList.add('task')
-            newestTask.classList.add('new')
-            newestTask.classList.add('newer')
-
-            const newerSvg = document.createElement('svg')
-            newerSvg.innerHTML =
-                '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
-            newestTask.appendChild(newerSvg)
-
-            const newerAdd = document.createElement('h3')
-            newerAdd.textContent = 'Add new task'
-            newestTask.appendChild(newerAdd)
-
-            main.appendChild(newestTask)
         })
 
+        const allNew = document.querySelectorAll('.newer')
+        allNew.forEach((element) => {
+            element.remove()
+        })
+
+        const newestTask = document.createElement('div')
+        newestTask.classList.add('task')
+        newestTask.classList.add('new')
+        newestTask.classList.add('newer')
+
+        const newerSvg = document.createElement('svg')
+        newerSvg.innerHTML =
+            '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
+        newestTask.appendChild(newerSvg)
+
+        const newerAdd = document.createElement('h3')
+        newerAdd.textContent = 'Add new task'
+        newestTask.appendChild(newerAdd)
+
+        main.appendChild(newestTask)
+
         if (num !== 1) {
-            newtask.addEventListener('click', () => {
+            newestTask.addEventListener('click', () => {
                 const formed = document.createElement('div')
                 formed.classList.add('formed')
                 document.body.appendChild(formed)
@@ -311,14 +329,68 @@ export default function index() {
                         dueofDate.textContent = `${createdTodo.actualDate}`
                         dueofDate.classList.add('dueofdate')
                         task.appendChild(dueofDate)
+
                         const no = document.createElement('button')
                         no.classList.add('nope')
                         no.type = 'reset'
                         no.innerHTML =
                             '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
                         task.appendChild(no)
+
                         no.addEventListener('click', () => {
-                            task.remove()
+                            task.style.opacity = '0'
+                            setTimeout(() => {
+                                task.remove()
+
+                                const indexIndex =
+                                    indexList.indexOf(createdTodo)
+
+                                if (indexIndex > -1) {
+                                    indexList.splice(indexIndex, 1)
+                                }
+                                const todayIndex =
+                                    todayList.indexOf(createdTodo)
+
+                                if (todayIndex > -1) {
+                                    todayList.splice(todayIndex, 1)
+                                }
+
+                                const upcomingIndex =
+                                    upcomingList.indexOf(createdTodo)
+
+                                if (upcomingIndex > -1) {
+                                    upcomingList.splice(upcomingIndex, 1)
+                                }
+                            }, 350)
+                        })
+
+                        checkbox.addEventListener('change', () => {
+                            setTimeout(() => {
+                                task.style.opacity = '0'
+                                setTimeout(() => {
+                                    task.remove()
+
+                                    const indexIndex =
+                                        indexList.indexOf(createdTodo)
+
+                                    if (indexIndex > -1) {
+                                        indexList.splice(indexIndex, 1)
+                                    }
+                                    const todayIndex =
+                                        todayList.indexOf(createdTodo)
+
+                                    if (todayIndex > -1) {
+                                        todayList.splice(todayIndex, 1)
+                                    }
+
+                                    const upcomingIndex =
+                                        upcomingList.indexOf(createdTodo)
+
+                                    if (upcomingIndex > -1) {
+                                        upcomingList.splice(upcomingIndex, 1)
+                                    }
+                                }, 350)
+                            }, 350)
                         })
 
                         const parsedIso = parseISO(dateitself.value)
@@ -334,24 +406,6 @@ export default function index() {
                             indexList.push(createdTodo)
                             upcomingList.push(createdTodo)
                         }
-
-                        const allNew = document.querySelectorAll('.newer')
-                        allNew.forEach((element) => {
-                            element.remove()
-                        })
-                        const newestTask = document.createElement('div')
-                        newestTask.classList.add('task')
-                        newestTask.classList.add('new')
-                        newestTask.classList.add('newer')
-
-                        const newerSvg = document.createElement('svg')
-                        newerSvg.innerHTML =
-                            '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
-                        newestTask.appendChild(newerSvg)
-
-                        const newerAdd = document.createElement('h3')
-                        newerAdd.textContent = 'Add new task'
-                        newestTask.appendChild(newerAdd)
 
                         main.appendChild(newestTask)
 
@@ -409,7 +463,53 @@ export default function index() {
                 '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
             task.appendChild(no)
             no.addEventListener('click', () => {
-                task.remove()
+                task.style.opacity = '0'
+                setTimeout(() => {
+                    task.remove()
+
+                    const indexIndex = indexList.indexOf(element)
+
+                    if (indexIndex > -1) {
+                        indexList.splice(indexIndex, 1)
+                    }
+                    const todayIndex = todayList.indexOf(element)
+
+                    if (todayIndex > -1) {
+                        todayList.splice(todayIndex, 1)
+                    }
+
+                    const upcomingIndex = upcomingList.indexOf(element)
+
+                    if (upcomingIndex > -1) {
+                        upcomingList.splice(upcomingIndex, 1)
+                    }
+                }, 350)
+            })
+
+            checkbox.addEventListener('change', () => {
+                setTimeout(() => {
+                    task.style.opacity = '0'
+                    setTimeout(() => {
+                        task.remove()
+
+                        const indexIndex = indexList.indexOf(element)
+
+                        if (indexIndex > -1) {
+                            indexList.splice(indexIndex, 1)
+                        }
+                        const todayIndex = todayList.indexOf(element)
+
+                        if (todayIndex > -1) {
+                            todayList.splice(todayIndex, 1)
+                        }
+
+                        const upcomingIndex = upcomingList.indexOf(element)
+
+                        if (upcomingIndex > -1) {
+                            upcomingList.splice(upcomingIndex, 1)
+                        }
+                    }, 350)
+                }, 350)
             })
 
             const splitup = element.actualDate.split('/')
@@ -422,30 +522,30 @@ export default function index() {
             } else if (!isPast(parsedIso)) {
                 dueofDate.style.color = 'blue'
             }
-
-            const allNew = document.querySelectorAll('.newer')
-            allNew.forEach((element) => {
-                element.remove()
-            })
-            const newestTask = document.createElement('div')
-            newestTask.classList.add('task')
-            newestTask.classList.add('new')
-            newestTask.classList.add('newer')
-
-            const newerSvg = document.createElement('svg')
-            newerSvg.innerHTML =
-                '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
-            newestTask.appendChild(newerSvg)
-
-            const newerAdd = document.createElement('h3')
-            newerAdd.textContent = 'Add new task'
-            newestTask.appendChild(newerAdd)
-
-            main.appendChild(newestTask)
         })
 
+        const allNew = document.querySelectorAll('.newer')
+        allNew.forEach((element) => {
+            element.remove()
+        })
+        const newestTask = document.createElement('div')
+        newestTask.classList.add('task')
+        newestTask.classList.add('new')
+        newestTask.classList.add('newer')
+
+        const newerSvg = document.createElement('svg')
+        newerSvg.innerHTML =
+            '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
+        newestTask.appendChild(newerSvg)
+
+        const newerAdd = document.createElement('h3')
+        newerAdd.textContent = 'Add new task'
+        newestTask.appendChild(newerAdd)
+
+        main.appendChild(newestTask)
+
         if (num !== 1) {
-            newtask.addEventListener('click', () => {
+            newestTask.addEventListener('click', () => {
                 const formed = document.createElement('div')
                 formed.classList.add('formed')
                 document.body.appendChild(formed)
@@ -523,7 +623,59 @@ export default function index() {
                             '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
                         task.appendChild(no)
                         no.addEventListener('click', () => {
-                            task.remove()
+                            task.style.opacity = '0'
+                            setTimeout(() => {
+                                task.remove()
+
+                                const indexIndex =
+                                    indexList.indexOf(createdTodo)
+
+                                if (indexIndex > -1) {
+                                    indexList.splice(indexIndex, 1)
+                                }
+                                const todayIndex =
+                                    todayList.indexOf(createdTodo)
+
+                                if (todayIndex > -1) {
+                                    todayList.splice(todayIndex, 1)
+                                }
+
+                                const upcomingIndex =
+                                    upcomingList.indexOf(createdTodo)
+
+                                if (upcomingIndex > -1) {
+                                    upcomingList.splice(upcomingIndex, 1)
+                                }
+                            }, 350)
+                        })
+
+                        checkbox.addEventListener('change', () => {
+                            setTimeout(() => {
+                                task.style.opacity = '0'
+                                setTimeout(() => {
+                                    task.remove()
+
+                                    const indexIndex =
+                                        indexList.indexOf(createdTodo)
+
+                                    if (indexIndex > -1) {
+                                        indexList.splice(indexIndex, 1)
+                                    }
+                                    const todayIndex =
+                                        todayList.indexOf(createdTodo)
+
+                                    if (todayIndex > -1) {
+                                        todayList.splice(todayIndex, 1)
+                                    }
+
+                                    const upcomingIndex =
+                                        upcomingList.indexOf(createdTodo)
+
+                                    if (upcomingIndex > -1) {
+                                        upcomingList.splice(upcomingIndex, 1)
+                                    }
+                                }, 350)
+                            }, 350)
                         })
 
                         const parsedIso = parseISO(dateitself.value)
@@ -539,24 +691,6 @@ export default function index() {
                             indexList.push(createdTodo)
                             upcomingList.push(createdTodo)
                         }
-
-                        const allNew = document.querySelectorAll('.newer')
-                        allNew.forEach((element) => {
-                            element.remove()
-                        })
-                        const newestTask = document.createElement('div')
-                        newestTask.classList.add('task')
-                        newestTask.classList.add('new')
-                        newestTask.classList.add('newer')
-
-                        const newerSvg = document.createElement('svg')
-                        newerSvg.innerHTML =
-                            '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
-                        newestTask.appendChild(newerSvg)
-
-                        const newerAdd = document.createElement('h3')
-                        newerAdd.textContent = 'Add new task'
-                        newestTask.appendChild(newerAdd)
 
                         main.appendChild(newestTask)
 
@@ -614,7 +748,53 @@ export default function index() {
                 '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
             task.appendChild(no)
             no.addEventListener('click', () => {
-                task.remove()
+                task.style.opacity = '0'
+                setTimeout(() => {
+                    task.remove()
+
+                    const indexIndex = indexList.indexOf(element)
+
+                    if (indexIndex > -1) {
+                        indexList.splice(indexIndex, 1)
+                    }
+                    const todayIndex = todayList.indexOf(element)
+
+                    if (todayIndex > -1) {
+                        todayList.splice(todayIndex, 1)
+                    }
+
+                    const upcomingIndex = upcomingList.indexOf(element)
+
+                    if (upcomingIndex > -1) {
+                        upcomingList.splice(upcomingIndex, 1)
+                    }
+                }, 350)
+            })
+
+            checkbox.addEventListener('change', () => {
+                setTimeout(() => {
+                    task.style.opacity = '0'
+                    setTimeout(() => {
+                        task.remove()
+
+                        const indexIndex = indexList.indexOf(element)
+
+                        if (indexIndex > -1) {
+                            indexList.splice(indexIndex, 1)
+                        }
+                        const todayIndex = todayList.indexOf(element)
+
+                        if (todayIndex > -1) {
+                            todayList.splice(todayIndex, 1)
+                        }
+
+                        const upcomingIndex = upcomingList.indexOf(element)
+
+                        if (upcomingIndex > -1) {
+                            upcomingList.splice(upcomingIndex, 1)
+                        }
+                    }, 350)
+                }, 350)
             })
 
             const splitup = element.actualDate.split('/')
@@ -627,30 +807,31 @@ export default function index() {
             } else if (!isPast(parsedIso)) {
                 dueofDate.style.color = 'blue'
             }
-
-            const allNew = document.querySelectorAll('.newer')
-            allNew.forEach((element) => {
-                element.remove()
-            })
-            const newestTask = document.createElement('div')
-            newestTask.classList.add('task')
-            newestTask.classList.add('new')
-            newestTask.classList.add('newer')
-
-            const newerSvg = document.createElement('svg')
-            newerSvg.innerHTML =
-                '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
-            newestTask.appendChild(newerSvg)
-
-            const newerAdd = document.createElement('h3')
-            newerAdd.textContent = 'Add new task'
-            newestTask.appendChild(newerAdd)
-
-            main.appendChild(newestTask)
         })
 
+        const allNew = document.querySelectorAll('.newer')
+        allNew.forEach((element) => {
+            element.remove()
+        })
+
+        const newestTask = document.createElement('div')
+        newestTask.classList.add('task')
+        newestTask.classList.add('new')
+        newestTask.classList.add('newer')
+
+        const newerSvg = document.createElement('svg')
+        newerSvg.innerHTML =
+            '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
+        newestTask.appendChild(newerSvg)
+
+        const newerAdd = document.createElement('h3')
+        newerAdd.textContent = 'Add new task'
+        newestTask.appendChild(newerAdd)
+
+        main.appendChild(newestTask)
+
         if (num !== 1) {
-            newtask.addEventListener('click', () => {
+            newestTask.addEventListener('click', () => {
                 const formed = document.createElement('div')
                 formed.classList.add('formed')
                 document.body.appendChild(formed)
@@ -728,7 +909,59 @@ export default function index() {
                             '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
                         task.appendChild(no)
                         no.addEventListener('click', () => {
-                            task.remove()
+                            task.style.opacity = '0'
+                            setTimeout(() => {
+                                task.remove()
+
+                                const indexIndex =
+                                    indexList.indexOf(createdTodo)
+
+                                if (indexIndex > -1) {
+                                    indexList.splice(indexIndex, 1)
+                                }
+                                const todayIndex =
+                                    todayList.indexOf(createdTodo)
+
+                                if (todayIndex > -1) {
+                                    todayList.splice(todayIndex, 1)
+                                }
+
+                                const upcomingIndex =
+                                    upcomingList.indexOf(createdTodo)
+
+                                if (upcomingIndex > -1) {
+                                    upcomingList.splice(upcomingIndex, 1)
+                                }
+                            }, 350)
+                        })
+
+                        checkbox.addEventListener('change', () => {
+                            setTimeout(() => {
+                                task.style.opacity = '0'
+                                setTimeout(() => {
+                                    task.remove()
+
+                                    const indexIndex =
+                                        indexList.indexOf(createdTodo)
+
+                                    if (indexIndex > -1) {
+                                        indexList.splice(indexIndex, 1)
+                                    }
+                                    const todayIndex =
+                                        todayList.indexOf(createdTodo)
+
+                                    if (todayIndex > -1) {
+                                        todayList.splice(todayIndex, 1)
+                                    }
+
+                                    const upcomingIndex =
+                                        upcomingList.indexOf(createdTodo)
+
+                                    if (upcomingIndex > -1) {
+                                        upcomingList.splice(upcomingIndex, 1)
+                                    }
+                                }, 350)
+                            }, 350)
                         })
 
                         const parsedIso = parseISO(dateitself.value)
@@ -745,24 +978,6 @@ export default function index() {
                             upcomingList.push(createdTodo)
                         }
 
-                        const allNew = document.querySelectorAll('.newer')
-                        allNew.forEach((element) => {
-                            element.remove()
-                        })
-                        const newestTask = document.createElement('div')
-                        newestTask.classList.add('task')
-                        newestTask.classList.add('new')
-                        newestTask.classList.add('newer')
-
-                        const newerSvg = document.createElement('svg')
-                        newerSvg.innerHTML =
-                            '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
-                        newestTask.appendChild(newerSvg)
-
-                        const newerAdd = document.createElement('h3')
-                        newerAdd.textContent = 'Add new task'
-                        newestTask.appendChild(newerAdd)
-
                         main.appendChild(newestTask)
 
                         formed.remove()
@@ -776,5 +991,159 @@ export default function index() {
                 buttoncreate.addEventListener('click', butcreate)
             })
         }
+    })
+
+    newtask.addEventListener('click', () => {
+        const formed = document.createElement('div')
+        formed.classList.add('formed')
+        document.body.appendChild(formed)
+        content.style.pointerEvents = 'none'
+        content.style.filter = 'blur(5px)'
+        const clickexit = document.createElement('button')
+        clickexit.type = 'reset'
+        clickexit.classList.add('clickexit')
+        clickexit.innerHTML =
+            '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+        formed.appendChild(clickexit)
+
+        const taskcontainer = document.createElement('div')
+        taskcontainer.classList.add('container')
+        formed.appendChild(taskcontainer)
+
+        const tasklabel = document.createElement('label')
+        tasklabel.textContent = 'Task'
+        taskcontainer.appendChild(tasklabel)
+
+        const taskname = document.createElement('input')
+        taskcontainer.appendChild(taskname)
+        taskname.required = 'true'
+
+        const datecontainer = document.createElement('div')
+        datecontainer.classList.add('container')
+        formed.appendChild(datecontainer)
+
+        const datelabel = document.createElement('label')
+        datelabel.textContent = 'Deadline'
+        datecontainer.appendChild(datelabel)
+
+        const dateitself = document.createElement('input')
+        dateitself.type = 'date'
+        datecontainer.appendChild(dateitself)
+        dateitself.required = 'true'
+
+        const buttoncreate = document.createElement('button')
+        buttoncreate.classList.add('buttoncreate')
+        buttoncreate.textContent = 'Create'
+        formed.appendChild(buttoncreate)
+
+        clickexit.addEventListener('click', () => {
+            formed.remove()
+            content.style.pointerEvents = 'all'
+            content.style.filter = 'none'
+        })
+
+        function butcreate() {
+            if (taskname.value && dateitself.value) {
+                const createdTodo = createTodo(taskname.value, dateitself.value)
+                // console.log(createdTodo)
+
+                const task = document.createElement('div')
+                task.classList.add('task')
+                task.classList.add('tasks')
+                main.appendChild(task)
+                const checkbox = document.createElement('input')
+                checkbox.type = 'checkbox'
+                task.appendChild(checkbox)
+                const textarea = document.createElement('h3')
+                textarea.textContent = `${createdTodo.title}`
+                task.appendChild(textarea)
+                const dueofDate = document.createElement('h3')
+                dueofDate.textContent = `${createdTodo.actualDate}`
+                dueofDate.classList.add('dueofdate')
+                task.appendChild(dueofDate)
+                const no = document.createElement('button')
+                no.classList.add('nope')
+                no.type = 'reset'
+                no.innerHTML =
+                    '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+                task.appendChild(no)
+
+                no.addEventListener('click', () => {
+                    task.style.opacity = '0'
+                    setTimeout(() => {
+                        task.remove()
+
+                        const indexIndex = indexList.indexOf(createdTodo)
+
+                        if (indexIndex > -1) {
+                            indexList.splice(indexIndex, 1)
+                        }
+                        const todayIndex = todayList.indexOf(createdTodo)
+
+                        if (todayIndex > -1) {
+                            todayList.splice(todayIndex, 1)
+                        }
+
+                        const upcomingIndex = upcomingList.indexOf(createdTodo)
+
+                        if (upcomingIndex > -1) {
+                            upcomingList.splice(upcomingIndex, 1)
+                        }
+                    }, 350)
+                })
+
+                checkbox.addEventListener('change', () => {
+                    setTimeout(() => {
+                        task.style.opacity = '0'
+                        setTimeout(() => {
+                            task.remove()
+
+                            const indexIndex = indexList.indexOf(createdTodo)
+
+                            if (indexIndex > -1) {
+                                indexList.splice(indexIndex, 1)
+                            }
+                            const todayIndex = todayList.indexOf(createdTodo)
+
+                            if (todayIndex > -1) {
+                                todayList.splice(todayIndex, 1)
+                            }
+
+                            const upcomingIndex =
+                                upcomingList.indexOf(createdTodo)
+
+                            if (upcomingIndex > -1) {
+                                upcomingList.splice(upcomingIndex, 1)
+                            }
+                        }, 350)
+                    }, 350)
+                })
+
+                const parsedIso = parseISO(dateitself.value)
+                if (isToday(parsedIso)) {
+                    dueofDate.style.color = 'green'
+                    indexList.push(createdTodo)
+                    todayList.push(createdTodo)
+                } else if (isPast(parsedIso)) {
+                    dueofDate.style.color = 'red'
+                    indexList.push(createdTodo)
+                } else if (!isPast(parsedIso)) {
+                    dueofDate.style.color = 'blue'
+                    indexList.push(createdTodo)
+                    upcomingList.push(createdTodo)
+                }
+
+                main.appendChild(newtask)
+
+                formed.remove()
+                content.style.pointerEvents = 'all'
+                content.style.filter = 'none'
+            } else {
+                alert('Incomplete')
+            }
+        }
+
+        const firstbuttoncreate = document.querySelector('.buttoncreate')
+        firstbuttoncreate.addEventListener('click', butcreate)
     })
 }
