@@ -17,7 +17,14 @@ import createProject, { createTodo, todoStatus } from './createTodo'
 
 // still have to do the todostatus
 
-export default function buttonEffect(indexList, todayList, upcomingList) {
+export default function buttonEffect(
+    indexList,
+    todayList,
+    upcomingList,
+    indexList_deserialized,
+    todayList_deserialized,
+    upcomingList_deserialized
+) {
     const content = document.getElementById('content')
     const projectNew = document.querySelector('.new')
     const projects = document.querySelector('.projects')
@@ -114,8 +121,13 @@ export default function buttonEffect(indexList, todayList, upcomingList) {
                     projectNewer.style.backgroundColor = 'rgb(196, 70, 70)'
                     projectNewer.style.color = 'white'
 
-                    // whenever u makea  new project the event listene ris added to it so it makes more and more forms, u can add an if that if there is already one then
-                    // stop or u can stop it at the root
+                    // const project_deserialized = JSON.parse(
+                    //     localStorage.getItem(`${title.textContent}`)
+                    // )
+
+                    // project_deserialized.forEach(element => {
+                    //     project.push(element)
+                    // });
 
                     project.todo.forEach((element) => {
                         const task = document.createElement('div')
@@ -166,6 +178,45 @@ export default function buttonEffect(indexList, todayList, upcomingList) {
                                 if (upcomingIndex > -1) {
                                     upcomingList.splice(upcomingIndex, 1)
                                 }
+
+                                const localIndex =
+                                    indexList_deserialized.indexOf(element)
+
+                                if (localIndex > -1) {
+                                    indexList_deserialized.splice(localIndex, 1)
+                                }
+
+                                localStorage.setItem(
+                                    'indexList',
+                                    JSON.stringify(indexList_deserialized)
+                                )
+
+                                const localToday =
+                                    todayList_deserialized.indexOf(element)
+
+                                if (localToday > -1) {
+                                    todayList_deserialized.splice(localToday, 1)
+                                }
+
+                                localStorage.setItem(
+                                    'todayList',
+                                    JSON.stringify(todayList_deserialized)
+                                )
+
+                                const localUpcoming =
+                                    upcomingList_deserialized.indexOf(element)
+
+                                if (localUpcoming > -1) {
+                                    upcomingList_deserialized.splice(
+                                        localUpcoming,
+                                        1
+                                    )
+                                }
+
+                                localStorage.setItem(
+                                    'upcomgList',
+                                    JSON.stringify(upcomingList_deserialized)
+                                )
                             }, 350)
                         })
 
@@ -200,6 +251,55 @@ export default function buttonEffect(indexList, todayList, upcomingList) {
                                     if (upcomingIndex > -1) {
                                         upcomingList.splice(upcomingIndex, 1)
                                     }
+
+                                    const localIndex =
+                                        indexList_deserialized.indexOf(element)
+
+                                    if (localIndex > -1) {
+                                        indexList_deserialized.splice(
+                                            localIndex,
+                                            1
+                                        )
+                                    }
+
+                                    localStorage.setItem(
+                                        'indexList',
+                                        JSON.stringify(indexList_deserialized)
+                                    )
+
+                                    const localToday =
+                                        todayList_deserialized.indexOf(element)
+
+                                    if (localToday > -1) {
+                                        todayList_deserialized.splice(
+                                            localToday,
+                                            1
+                                        )
+                                    }
+
+                                    localStorage.setItem(
+                                        'todayList',
+                                        JSON.stringify(todayList_deserialized)
+                                    )
+
+                                    const localUpcoming =
+                                        upcomingList_deserialized.indexOf(
+                                            element
+                                        )
+
+                                    if (localUpcoming > -1) {
+                                        upcomingList_deserialized.splice(
+                                            localUpcoming,
+                                            1
+                                        )
+                                    }
+
+                                    localStorage.setItem(
+                                        'upcomgList',
+                                        JSON.stringify(
+                                            upcomingList_deserialized
+                                        )
+                                    )
                                 }, 350)
                             }, 350)
                         })
@@ -356,6 +456,63 @@ export default function buttonEffect(indexList, todayList, upcomingList) {
                                                 1
                                             )
                                         }
+
+                                        const localIndex =
+                                            indexList_deserialized.indexOf(
+                                                element
+                                            )
+
+                                        if (localIndex > -1) {
+                                            indexList_deserialized.splice(
+                                                localIndex,
+                                                1
+                                            )
+                                        }
+
+                                        localStorage.setItem(
+                                            'indexList',
+                                            JSON.stringify(
+                                                indexList_deserialized
+                                            )
+                                        )
+
+                                        const localToday =
+                                            todayList_deserialized.indexOf(
+                                                element
+                                            )
+
+                                        if (localToday > -1) {
+                                            todayList_deserialized.splice(
+                                                localToday,
+                                                1
+                                            )
+                                        }
+
+                                        localStorage.setItem(
+                                            'todayList',
+                                            JSON.stringify(
+                                                todayList_deserialized
+                                            )
+                                        )
+
+                                        const localUpcoming =
+                                            upcomingList_deserialized.indexOf(
+                                                element
+                                            )
+
+                                        if (localUpcoming > -1) {
+                                            upcomingList_deserialized.splice(
+                                                localUpcoming,
+                                                1
+                                            )
+                                        }
+
+                                        localStorage.setItem(
+                                            'upcomgList',
+                                            JSON.stringify(
+                                                upcomingList_deserialized
+                                            )
+                                        )
                                     }, 350)
                                 })
 
@@ -398,6 +555,63 @@ export default function buttonEffect(indexList, todayList, upcomingList) {
                                                     1
                                                 )
                                             }
+
+                                            const localIndex =
+                                                indexList_deserialized.indexOf(
+                                                    element
+                                                )
+
+                                            if (localIndex > -1) {
+                                                indexList_deserialized.splice(
+                                                    localIndex,
+                                                    1
+                                                )
+                                            }
+
+                                            localStorage.setItem(
+                                                'indexList',
+                                                JSON.stringify(
+                                                    indexList_deserialized
+                                                )
+                                            )
+
+                                            const localToday =
+                                                todayList_deserialized.indexOf(
+                                                    element
+                                                )
+
+                                            if (localToday > -1) {
+                                                todayList_deserialized.splice(
+                                                    localToday,
+                                                    1
+                                                )
+                                            }
+
+                                            localStorage.setItem(
+                                                'todayList',
+                                                JSON.stringify(
+                                                    todayList_deserialized
+                                                )
+                                            )
+
+                                            const localUpcoming =
+                                                upcomingList_deserialized.indexOf(
+                                                    element
+                                                )
+
+                                            if (localUpcoming > -1) {
+                                                upcomingList_deserialized.splice(
+                                                    localUpcoming,
+                                                    1
+                                                )
+                                            }
+
+                                            localStorage.setItem(
+                                                'upcomgList',
+                                                JSON.stringify(
+                                                    upcomingList_deserialized
+                                                )
+                                            )
                                         }, 350)
                                     }, 350)
                                 })
@@ -416,35 +630,6 @@ export default function buttonEffect(indexList, todayList, upcomingList) {
                                     indexList.push(createdTodo)
                                 }
 
-                                // const allNew =
-                                //     document.querySelectorAll('.newer')
-                                // allNew.forEach((element) => {
-                                //     element.remove()
-                                // })
-                                // const newestTask = document.createElement('div')
-                                // newestTask.classList.add('task')
-                                // newestTask.classList.add('new')
-                                // newestTask.classList.add('newer')
-
-                                // const newerSvg = document.createElement('svg')
-                                // newerSvg.innerHTML =
-                                //     '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
-                                // newestTask.appendChild(newerSvg)
-
-                                // const newerAdd = document.createElement('h3')
-                                // newerAdd.textContent = 'Add new task'
-                                // newestTask.appendChild(newerAdd)
-
-                                // main.appendChild(newestTask)
-
-                                // const taskSvg = document.createElement('svg')
-                                // taskSvg.innerHTML =
-                                //     '<svg style="width: 24px; height: 24px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /> </svg>'
-                                // taskNew.appendChild(taskSvg)
-
-                                // const addNew = document.createElement('h3')
-                                // addNew.textContent = 'Add new task'
-                                // taskNew.appendChild(addNew)
                                 taskNew = document.querySelector('.newer')
                                 main.appendChild(taskNew)
                                 formed.remove()
@@ -452,6 +637,38 @@ export default function buttonEffect(indexList, todayList, upcomingList) {
                                 content.style.filter = 'none'
 
                                 project.todo.push(createdTodo)
+
+                                const project_serialized =
+                                    JSON.stringify(project)
+
+                                // localStorage.setItem(
+                                //     `${title.textContent}`,
+                                //     project_serialized
+                                // )
+
+                                const indexList_serialized =
+                                    JSON.stringify(indexList)
+
+                                localStorage.setItem(
+                                    'indexList',
+                                    indexList_serialized
+                                )
+
+                                const todayList_serialized =
+                                    JSON.stringify(todayList)
+
+                                localStorage.setItem(
+                                    'todayList',
+                                    todayList_serialized
+                                )
+
+                                const upcomingList_serialized =
+                                    JSON.stringify(upcomingList)
+
+                                localStorage.setItem(
+                                    'upcomingList',
+                                    upcomingList_serialized
+                                )
                             } else {
                                 alert('Incomplete')
                             }
@@ -459,9 +676,6 @@ export default function buttonEffect(indexList, todayList, upcomingList) {
 
                         buttoncreate.addEventListener('click', butcreate)
                     })
-
-                    // const buttoncreate = document.querySelector('.buttoncreate')
-                    // buttoncreate.addEventListener('click', () => {})
                 })
             }
         })

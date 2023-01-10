@@ -16,7 +16,6 @@ export function createTodo(title, dueDate) {
     return {
         title,
         actualDate,
-        status: false,
     }
 }
 

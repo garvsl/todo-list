@@ -133,7 +133,6 @@ export default function index() {
     newtask.appendChild(addNew)
 
     mobileBut()
-    buttonEffect(indexList, todayList, upcomingList)
 
     tabOne.addEventListener('click', () => {
         const allProjects = document.querySelectorAll('.project')
@@ -413,6 +412,22 @@ export default function index() {
                         formed.remove()
                         content.style.pointerEvents = 'all'
                         content.style.filter = 'none'
+
+                        const indexList_serialized = JSON.stringify(indexList)
+
+                        localStorage.setItem('indexList', indexList_serialized)
+
+                        const todayList_serialized = JSON.stringify(todayList)
+
+                        localStorage.setItem('todayList', todayList_serialized)
+
+                        const upcomingList_serialized =
+                            JSON.stringify(upcomingList)
+
+                        localStorage.setItem(
+                            'upcomingList',
+                            upcomingList_serialized
+                        )
                     } else {
                         alert('Incomplete')
                     }
@@ -698,6 +713,22 @@ export default function index() {
                         formed.remove()
                         content.style.pointerEvents = 'all'
                         content.style.filter = 'none'
+
+                        const indexList_serialized = JSON.stringify(indexList)
+
+                        localStorage.setItem('indexList', indexList_serialized)
+
+                        const todayList_serialized = JSON.stringify(todayList)
+
+                        localStorage.setItem('todayList', todayList_serialized)
+
+                        const upcomingList_serialized =
+                            JSON.stringify(upcomingList)
+
+                        localStorage.setItem(
+                            'upcomingList',
+                            upcomingList_serialized
+                        )
                     } else {
                         alert('Incomplete')
                     }
@@ -984,6 +1015,22 @@ export default function index() {
                         formed.remove()
                         content.style.pointerEvents = 'all'
                         content.style.filter = 'none'
+
+                        const indexList_serialized = JSON.stringify(indexList)
+
+                        localStorage.setItem('indexList', indexList_serialized)
+
+                        const todayList_serialized = JSON.stringify(todayList)
+
+                        localStorage.setItem('todayList', todayList_serialized)
+
+                        const upcomingList_serialized =
+                            JSON.stringify(upcomingList)
+
+                        localStorage.setItem(
+                            'upcomingList',
+                            upcomingList_serialized
+                        )
                     } else {
                         alert('Incomplete')
                     }
@@ -1139,6 +1186,18 @@ export default function index() {
                 formed.remove()
                 content.style.pointerEvents = 'all'
                 content.style.filter = 'none'
+
+                const indexList_serialized = JSON.stringify(indexList)
+
+                localStorage.setItem('indexList', indexList_serialized)
+
+                const todayList_serialized = JSON.stringify(todayList)
+
+                localStorage.setItem('todayList', todayList_serialized)
+
+                const upcomingList_serialized = JSON.stringify(upcomingList)
+
+                localStorage.setItem('upcomingList', upcomingList_serialized)
             } else {
                 alert('Incomplete')
             }
@@ -1147,4 +1206,229 @@ export default function index() {
         const firstbuttoncreate = document.querySelector('.buttoncreate')
         firstbuttoncreate.addEventListener('click', butcreate)
     })
+
+    function storageAvailable(type) {
+        let storage
+        try {
+            storage = window[type]
+            const x = '__storage_test__'
+            storage.setItem(x, x)
+            storage.removeItem(x)
+            return true
+        } catch (e) {
+            return (
+                e instanceof DOMException &&
+                (e.message === 22 ||
+                    e.message === 1014 ||
+                    e.name === 'QuotaExceededError' ||
+                    e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+                storage &&
+                storage.length !== 0
+            )
+        }
+    }
+
+    if (storageAvailable('localStorage')) {
+        const indexList_deserialized = JSON.parse(
+            localStorage.getItem('indexList')
+        )
+
+        const todayList_deserialized = JSON.parse(
+            localStorage.getItem('todayList')
+        )
+
+        const upcomingList_deserialized = JSON.parse(
+            localStorage.getItem('upcomingList')
+        )
+
+        indexList_deserialized.forEach((element) => {
+            const task = document.createElement('div')
+            task.classList.add('task')
+            task.classList.add('tasks')
+            main.appendChild(task)
+            const checkbox = document.createElement('input')
+            checkbox.type = 'checkbox'
+            task.appendChild(checkbox)
+            const textarea = document.createElement('h3')
+            textarea.textContent = `${element.title}`
+            task.appendChild(textarea)
+            const dueofDate = document.createElement('h3')
+            dueofDate.textContent = `${element.actualDate}`
+            dueofDate.classList.add('dueofdate')
+            task.appendChild(dueofDate)
+            const no = document.createElement('button')
+            no.classList.add('nope')
+            no.type = 'reset'
+            no.innerHTML =
+                '<svg style="width:24px;height:24px" viewBox="0 0 24 24">     <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /> </svg>'
+            task.appendChild(no)
+            no.addEventListener('click', () => {
+                task.style.opacity = '0'
+                setTimeout(() => {
+                    task.remove()
+
+                    const indexIndex = indexList.indexOf(element)
+
+                    if (indexIndex > -1) {
+                        indexList.splice(indexIndex, 1)
+                    }
+                    const todayIndex = todayList.indexOf(element)
+
+                    if (todayIndex > -1) {
+                        todayList.splice(todayIndex, 1)
+                    }
+
+                    const upcomingIndex = upcomingList.indexOf(element)
+
+                    if (upcomingIndex > -1) {
+                        upcomingList.splice(upcomingIndex, 1)
+                    }
+
+                    const localIndex = indexList_deserialized.indexOf(element)
+
+                    if (localIndex > -1) {
+                        indexList_deserialized.splice(localIndex, 1)
+                    }
+
+                    localStorage.setItem(
+                        'indexList',
+                        JSON.stringify(indexList_deserialized)
+                    )
+
+                    const localToday = todayList_deserialized.indexOf(element)
+
+                    if (localToday > -1) {
+                        todayList_deserialized.splice(localToday, 1)
+                    }
+
+                    localStorage.setItem(
+                        'todayList',
+                        JSON.stringify(todayList_deserialized)
+                    )
+
+                    const localUpcoming =
+                        upcomingList_deserialized.indexOf(element)
+
+                    if (localUpcoming > -1) {
+                        upcomingList_deserialized.splice(localUpcoming, 1)
+                    }
+
+                    localStorage.setItem(
+                        'upcomgList',
+                        JSON.stringify(upcomingList_deserialized)
+                    )
+                }, 350)
+            })
+
+            checkbox.addEventListener('change', () => {
+                setTimeout(() => {
+                    task.style.opacity = '0'
+                    setTimeout(() => {
+                        task.remove()
+
+                        const indexIndex = indexList.indexOf(element)
+
+                        if (indexIndex > -1) {
+                            indexList.splice(indexIndex, 1)
+                        }
+                        const todayIndex = todayList.indexOf(element)
+
+                        if (todayIndex > -1) {
+                            todayList.splice(todayIndex, 1)
+                        }
+
+                        const upcomingIndex = upcomingList.indexOf(element)
+
+                        if (upcomingIndex > -1) {
+                            upcomingList.splice(upcomingIndex, 1)
+                        }
+
+                        const localIndex =
+                            indexList_deserialized.indexOf(element)
+
+                        if (localIndex > -1) {
+                            indexList_deserialized.splice(localIndex, 1)
+                        }
+
+                        localStorage.setItem(
+                            'indexList',
+                            JSON.stringify(indexList_deserialized)
+                        )
+
+                        const localToday =
+                            todayList_deserialized.indexOf(element)
+
+                        if (localToday > -1) {
+                            todayList_deserialized.splice(localToday, 1)
+                        }
+
+                        localStorage.setItem(
+                            'todayList',
+                            JSON.stringify(todayList_deserialized)
+                        )
+
+                        const localUpcoming =
+                            upcomingList_deserialized.indexOf(element)
+
+                        if (localUpcoming > -1) {
+                            upcomingList_deserialized.splice(localUpcoming, 1)
+                        }
+
+                        localStorage.setItem(
+                            'upcomgList',
+                            JSON.stringify(upcomingList_deserialized)
+                        )
+                    }, 350)
+                }, 350)
+            })
+
+            const splitup = element.actualDate.split('/')
+            const newdate = `${splitup[2]}-${splitup[0]}-${splitup[1]}`
+            const parsedIso = parseISO(newdate)
+            if (isToday(parsedIso)) {
+                dueofDate.style.color = 'green'
+                todayList.push(element)
+                indexList.push(element)
+            } else if (isPast(parsedIso)) {
+                dueofDate.style.color = 'red'
+                indexList.push(element)
+            } else if (!isPast(parsedIso)) {
+                dueofDate.style.color = 'blue'
+                upcomingList.push(element)
+                indexList.push(element)
+            }
+
+            const newestTask = document.querySelector('.newer')
+
+            main.appendChild(newestTask)
+        })
+
+        buttonEffect(
+            indexList,
+            todayList,
+            upcomingList,
+            indexList_deserialized,
+            todayList_deserialized,
+            upcomingList_deserialized
+        )
+
+        // Yippee! We can use localStorage awesomeness
+        // if (!localStorage.getItem('bgcolor')) {
+        //     populateStorage()
+        // } else {
+        //     setStyles()
+        // }
+        // they are set as strings, and this means that you cant really save the entire task, as that is an object, you will more likely
+        // than not have to actually storage the date, and the task, adn the projects, and entirely create those again when the site loads
+        // and they can be made from the data in the local storage
+        // local storage .for each , localstorage.getitem(element)
+    } else {
+        buttonEffect(indexList, todayList, upcomingList)
+        // Too bad, no localStorage for us
+    }
 }
+
+// now i hav eto add this too all no/checkbox functions
+
+// now I have to do this for the projects, but not the entire thing, i only have to push get them from their lists
+// and push that to local storage, and also associate inboxlist and the rest
